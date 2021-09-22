@@ -10,4 +10,4 @@
 
 #### Lesson Maintainers:
 
-* [Joseph Stachelek][stachelek_joseph]
+* [Jemma Stachelek][stachelek_jemma]
