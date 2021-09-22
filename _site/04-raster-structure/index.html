@@ -19,7 +19,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="last-modified" content="2020-02-18 18:18:21 -0500">
+    <meta http-equiv="last-modified" content="2021-09-22 15:29:24 -0600">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- meta "search-domain" used for google site search function google_search() -->
     <meta name="search-domain" value="">
@@ -263,10 +263,10 @@
 	<li><p>Explore raster attributes and metadata using R.</p>
 </li>
 	
-	<li><p>Import rasters into R using the <code class="highlighter-rouge">raster</code> package.</p>
+	<li><p>Import rasters into R using the <code class="language-plaintext highlighter-rouge">raster</code> package.</p>
 </li>
 	
-	<li><p>Plot a raster file in R using the <code class="highlighter-rouge">ggplot2</code> package.</p>
+	<li><p>Plot a raster file in R using the <code class="language-plaintext highlighter-rouge">ggplot2</code> package.</p>
 </li>
 	
 	<li><p>Describe the difference between single- and multi-band rasters.</p>
@@ -293,9 +293,9 @@ elements that we need to understand to work with rasters in R, including CRS
 and resolution. We will also explore missing and bad data values as stored in a
 raster and how R handles these elements.</p>
 
-<p>We will continue to work with the <code class="highlighter-rouge">dplyr</code> and <code class="highlighter-rouge">ggplot2</code> packages that were introduced
+<p>We will continue to work with the <code class="language-plaintext highlighter-rouge">dplyr</code> and <code class="language-plaintext highlighter-rouge">ggplot2</code> packages that were introduced
 in the <a href="https://datacarpentry.org/r-intro-geospatial/">Introduction to R for Geospatial Data</a> lesson. We will use two additional packages in this episode to work with raster data - the
-<code class="highlighter-rouge">raster</code> and <code class="highlighter-rouge">rgdal</code> packages. Make sure that you have these packages loaded.</p>
+<code class="language-plaintext highlighter-rouge">raster</code> and <code class="language-plaintext highlighter-rouge">rgdal</code> packages. Make sure that you have these packages loaded.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">raster</span><span class="p">)</span><span class="w">
 </span><span class="n">library</span><span class="p">(</span><span class="n">rgdal</span><span class="p">)</span><span class="w">
@@ -317,14 +317,18 @@ page</a>.</p>
 
 <p>We will be working with a series of GeoTIFF files in this lesson. The
 GeoTIFF format contains a set of embedded tags with metadata about the raster
-data. We can use the function <code class="highlighter-rouge">GDALinfo()</code> to get information about our raster
+data. We can use the function <code class="language-plaintext highlighter-rouge">GDALinfo()</code> to get information about our raster
 data before we read that data into R. It is ideal to do this before importing
 your data.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">GDALinfo</span><span class="p">(</span><span class="s2">"data/erie_bathy.tif"</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rows        623 
+<div class="language-plaintext error highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Warning in getProjectionRef(x, OVERRIDE_PROJ_DATUM_WITH_TOWGS84 = OVERRIDE_PROJ_DATUM_WITH_TOWGS84, : Discarded datum Unknown_based_on_GRS80_ellipsoid in Proj4 definition: +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs,
+ but +towgs84= values preserved
+</code></pre></div></div>
+
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rows        623 
 columns     1843 
 bands       1 
 lower left origin.x        245701 
@@ -355,14 +359,18 @@ AREA_OR_POINT=Area
 </span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
+<div class="language-plaintext error highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Warning in getProjectionRef(x, OVERRIDE_PROJ_DATUM_WITH_TOWGS84 = OVERRIDE_PROJ_DATUM_WITH_TOWGS84, : Discarded datum Unknown_based_on_GRS80_ellipsoid in Proj4 definition: +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs,
+ but +towgs84= values preserved
+</code></pre></div></div>
+
 <p>Each line of text that was printed to the console is now stored as an element of
-the character vector <code class="highlighter-rouge">erie_bathy_info</code>. We will be exploring this data throughout this 
+the character vector <code class="language-plaintext highlighter-rouge">erie_bathy_info</code>. We will be exploring this data throughout this 
 episode. By the end of this episode, you will be able to explain and understand the output above.</p>
 
 <h2 id="open-a-raster-in-r">Open a Raster in R</h2>
 
 <p>Now that we’ve previewed the metadata for our GeoTIFF, let’s import this
-raster dataset into R and explore its metadata more closely. We can use the <code class="highlighter-rouge">raster()</code> 
+raster dataset into R and explore its metadata more closely. We can use the <code class="language-plaintext highlighter-rouge">raster()</code> 
 function to open a raster in R.</p>
 
 <blockquote class="callout">
@@ -370,22 +378,28 @@ function to open a raster in R.</p>
   <p>To improve code
 readability, file and object names should be used that make it clear what is in
 the file. The data for this episode were collected from Lake Erie so
-we’ll use a naming convention of <code class="highlighter-rouge">datatype_HARV</code>.</p>
+we’ll use a naming convention of <code class="language-plaintext highlighter-rouge">datatype_HARV</code>.</p>
 </blockquote>
 
 <p>First we will load our raster file into R and view the data structure.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">erie_bathy</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">raster</span><span class="p">(</span><span class="s2">"data/erie_bathy.tif"</span><span class="p">)</span><span class="w">
-
-</span><span class="n">erie_bathy</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class      : RasterLayer 
+<div class="language-plaintext error highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Warning in showSRID(SRS_string, format = "PROJ", multiline = "NO", prefer_proj
+= prefer_proj): Discarded datum Unknown_based_on_GRS80_ellipsoid in Proj4
+definition
+</code></pre></div></div>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">erie_bathy</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class      : RasterLayer 
 dimensions : 623, 1843, 1148189  (nrow, ncol, ncell)
 resolution : 276, 370  (x, y)
 extent     : 245701, 754369, 4536578, 4767088  (xmin, xmax, ymin, ymax)
-crs        : +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
-source     : /home/jose/Documents/Science/Workshops/2020-02_glatos/glatos-spatial_workshop_materials/_episodes_rmd/data/erie_bathy.tif 
+crs        : +proj=utm +zone=17 +ellps=GRS80 +units=m +no_defs 
+source     : erie_bathy.tif 
 names      : erie_bathy 
 values     : -62.47671, 598.1871  (min, max)
 </code></pre></div></div>
@@ -397,27 +411,27 @@ columns, descriptive statistics for raster data can be retrieved like</p>
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">summary</span><span class="p">(</span><span class="n">erie_bathy</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="error highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Warning in .local(object, ...): summary is an estimate based on a sample of 1e+05 cells (8.71% of all cells)
+<div class="language-plaintext error highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Warning in .local(object, ...): summary is an estimate based on a sample of 1e+05 cells (8.71% of all cells)
 </code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        erie_bathy
-Min.    -62.473782
-1st Qu.   1.575743
-Median   63.313280
-3rd Qu. 219.961578
-Max.    596.867676
-NA's      0.000000
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>          erie_bathy
+Min.      -62.476707
+1st Qu.     1.498626
+Median     63.258566
+3rd Qu.   220.382710
+Max.      584.065308
+NA's    64379.000000
 </code></pre></div></div>
 
 <p>but note the warning - unless you force R to calculate these statistics using
 every cell in the raster, it will take a random sample of 100,000 cells and
 calculate from that instead. To force calculation on more, or even all values,
-you can use the parameter <code class="highlighter-rouge">maxsamp</code>:</p>
+you can use the parameter <code class="language-plaintext highlighter-rouge">maxsamp</code>:</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">summary</span><span class="p">(</span><span class="n">erie_bathy</span><span class="p">,</span><span class="w"> </span><span class="n">maxsamp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ncell</span><span class="p">(</span><span class="n">erie_bathy</span><span class="p">))</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>         erie_bathy
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>         erie_bathy
 Min.      -62.47671
 1st Qu.     1.49860
 Median     63.22672
@@ -426,13 +440,13 @@ Max.      598.18713
 NA's    64779.00000
 </code></pre></div></div>
 
-<p>You may not see major differences in summary stats as <code class="highlighter-rouge">maxsamp</code> increases,
+<p>You may not see major differences in summary stats as <code class="language-plaintext highlighter-rouge">maxsamp</code> increases,
 except with very large rasters.</p>
 
-<p>To visualise this data in R using <code class="highlighter-rouge">ggplot2</code>, we need to convert it to a
+<p>To visualise this data in R using <code class="language-plaintext highlighter-rouge">ggplot2</code>, we need to convert it to a
 dataframe. We learned about dataframes in <a href="https://datacarpentry.org/r-intro-geospatial/04-data-structures-part2/index.html">an earlier
 lesson</a>.
-The <code class="highlighter-rouge">raster</code> package has an built-in function for conversion to a plotable dataframe.</p>
+The <code class="language-plaintext highlighter-rouge">raster</code> package has an built-in function for conversion to a plotable dataframe.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">erie_bathy_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as.data.frame</span><span class="p">(</span><span class="n">erie_bathy</span><span class="p">,</span><span class="w"> </span><span class="n">xy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
@@ -443,14 +457,14 @@ dataframe format.</p>
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">str</span><span class="p">(</span><span class="n">erie_bathy_df</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>'data.frame':	1148189 obs. of  3 variables:
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>'data.frame':	1148189 obs. of  3 variables:
  $ x         : num  245839 246115 246391 246667 246943 ...
  $ y         : num  4766903 4766903 4766903 4766903 4766903 ...
  $ erie_bathy: num  NA NA NA NA NA NA NA NA NA NA ...
 </code></pre></div></div>
 
-<p>We can use <code class="highlighter-rouge">ggplot()</code> to plot this data. We will set the color scale to <code class="highlighter-rouge">scale_fill_viridis_c</code>
-which is a color-blindness friendly color scale. We will also use the <code class="highlighter-rouge">coord_quickmap()</code> function to use an approximate Mercator projection for our plots. This approximation is suitable for small areas that are not too close to the poles. Other coordinate systems are available in ggplot2 if needed, you can learn about them at their help page <code class="highlighter-rouge">?coord_map</code>.</p>
+<p>We can use <code class="language-plaintext highlighter-rouge">ggplot()</code> to plot this data. We will set the color scale to <code class="language-plaintext highlighter-rouge">scale_fill_viridis_c</code>
+which is a color-blindness friendly color scale. We will also use the <code class="language-plaintext highlighter-rouge">coord_quickmap()</code> function to use an approximate Mercator projection for our plots. This approximation is suitable for small areas that are not too close to the poles. Other coordinate systems are available in ggplot2 if needed, you can learn about them at their help page <code class="language-plaintext highlighter-rouge">?coord_map</code>.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
     </span><span class="n">geom_raster</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">erie_bathy_df</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">erie_bathy</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
@@ -468,10 +482,10 @@ which is a color-blindness friendly color scale. We will also use the <code clas
 
 <blockquote class="callout">
   <h2 id="plotting-tip-1">Plotting Tip</h2>
-  <p>For faster, simpler plots, you can use the <code class="highlighter-rouge">plot</code> function from the <code class="highlighter-rouge">raster</code> package.</p>
+  <p>For faster, simpler plots, you can use the <code class="language-plaintext highlighter-rouge">plot</code> function from the <code class="language-plaintext highlighter-rouge">raster</code> package.</p>
   <blockquote class="solution">
     <h2 id="show-plot">Show plot</h2>
-    <p>See <code class="highlighter-rouge">?plot</code> for more arguments to customize the plot</p>
+    <p>See <code class="language-plaintext highlighter-rouge">?plot</code> for more arguments to customize the plot</p>
 
     <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">erie_bathy</span><span class="p">)</span><span class="w">
 </span></code></pre></div>    </div>
@@ -492,15 +506,14 @@ lesson</a>.</p>
 meanings they have.</p>
 
 <h3 id="view-raster-coordinate-reference-system-crs-in-r">View Raster Coordinate Reference System (CRS) in R</h3>
-<p>We can view the CRS string associated with our R object using the<code class="highlighter-rouge">crs()</code>
+<p>We can view the CRS string associated with our R object using the<code class="language-plaintext highlighter-rouge">crs()</code>
 function.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">crs</span><span class="p">(</span><span class="n">erie_bathy</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CRS arguments:
- +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m
-+no_defs 
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CRS arguments:
+ +proj=utm +zone=17 +ellps=GRS80 +units=m +no_defs 
 </code></pre></div></div>
 
 <blockquote class="challenge">
@@ -509,22 +522,22 @@ function.</p>
 
   <blockquote class="solution">
     <h2 id="answers">Answers</h2>
-    <p><code class="highlighter-rouge">+units=m</code> tells us that our data is in meters.</p>
+    <p><code class="language-plaintext highlighter-rouge">+units=m</code> tells us that our data is in meters.</p>
   </blockquote>
 </blockquote>
 
 <h2 id="understanding-crs-in-proj4-format">Understanding CRS in Proj4 Format</h2>
-<p>The CRS for our data is given to us by R in <code class="highlighter-rouge">proj4</code> format. Let’s break down
-the pieces of <code class="highlighter-rouge">proj4</code> string. The string contains all of the individual CRS
+<p>The CRS for our data is given to us by R in <code class="language-plaintext highlighter-rouge">proj4</code> format. Let’s break down
+the pieces of <code class="language-plaintext highlighter-rouge">proj4</code> string. The string contains all of the individual CRS
 elements that R or another GIS might need. Each element is specified with a
-<code class="highlighter-rouge">+</code> sign, similar to how a <code class="highlighter-rouge">.csv</code> file is delimited or broken up by a <code class="highlighter-rouge">,</code>. After
-each <code class="highlighter-rouge">+</code> we see the CRS element being defined. For example projection (<code class="highlighter-rouge">proj=</code>)
-and zone (<code class="highlighter-rouge">zone=</code>).</p>
+<code class="language-plaintext highlighter-rouge">+</code> sign, similar to how a <code class="language-plaintext highlighter-rouge">.csv</code> file is delimited or broken up by a <code class="language-plaintext highlighter-rouge">,</code>. After
+each <code class="language-plaintext highlighter-rouge">+</code> we see the CRS element being defined. For example projection (<code class="language-plaintext highlighter-rouge">proj=</code>)
+and zone (<code class="language-plaintext highlighter-rouge">zone=</code>).</p>
 
 <h3 id="utm-proj4-string">UTM Proj4 String</h3>
-<p>Our projection string for <code class="highlighter-rouge">erie_bathy</code> specifies the UTM projection as follows:</p>
+<p>Our projection string for <code class="language-plaintext highlighter-rouge">erie_bathy</code> specifies the UTM projection as follows:</p>
 
-<p><code class="highlighter-rouge">+proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</code></p>
+<p><code class="language-plaintext highlighter-rouge">+proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</code></p>
 
 <ul>
   <li><strong>proj=utm:</strong> the projection is UTM, UTM has several zones.</li>
@@ -552,20 +565,20 @@ can view these values:</p>
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">minValue</span><span class="p">(</span><span class="n">erie_bathy</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] -62.47671
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] -62.47671
 </code></pre></div></div>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">maxValue</span><span class="p">(</span><span class="n">erie_bathy</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] 598.1871
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] 598.1871
 </code></pre></div></div>
 
 <blockquote class="callout">
   <h2 id="data-tip---set-min-and-max-values">Data Tip - Set min and max values</h2>
   <p>If the minimum and maximum values haven’t already been
 calculated, we can calculate them using the
-<code class="highlighter-rouge">setMinMax()</code> function.</p>
+<code class="language-plaintext highlighter-rouge">setMinMax()</code> function.</p>
 
   <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">erie_bathy</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">setMinMax</span><span class="p">(</span><span class="n">erie_bathy</span><span class="p">)</span><span class="w">
 </span></code></pre></div>  </div>
@@ -575,71 +588,71 @@ calculated, we can calculate them using the
 598.1871338m.</p>
 
 <h2 id="raster-bands">Raster Bands</h2>
-<p>The Digital Surface Model object (<code class="highlighter-rouge">erie_bathy</code>) that we’ve been working with is a
+<p>The Digital Surface Model object (<code class="language-plaintext highlighter-rouge">erie_bathy</code>) that we’ve been working with is a
 single band raster. This means that there is only one dataset stored in the
 raster: surface elevation in meters for one time period.</p>
 
 <p><img src="../images/dc-spatial-raster/single_multi_raster.png" alt="Multi-band raster image" /></p>
 
-<p>A raster dataset can contain one or more bands. We can use the <code class="highlighter-rouge">raster()</code>
+<p>A raster dataset can contain one or more bands. We can use the <code class="language-plaintext highlighter-rouge">raster()</code>
 function to import one single band from a single or multi-band raster. We can
-view the number of bands in a raster using the <code class="highlighter-rouge">nlayers()</code> function.</p>
+view the number of bands in a raster using the <code class="language-plaintext highlighter-rouge">nlayers()</code> function.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nlayers</span><span class="p">(</span><span class="n">erie_bathy</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] 1
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] 1
 </code></pre></div></div>
 
 <p>However, raster data can also be multi-band, meaning that one raster file
 contains data for more than one variable or time period for each cell. By
-default the <code class="highlighter-rouge">raster()</code> function only imports the first band in a raster
+default the <code class="language-plaintext highlighter-rouge">raster()</code> function only imports the first band in a raster
 regardless of whether it has one or more bands. Jump to a later episode in
 this series for information on working with multi-band rasters:
 <a href="/05-raster-multi-band-in-r/">Work with Multi-band Rasters in R</a>.</p>
 
 <h2 id="dealing-with-missing-data">Dealing with Missing Data</h2>
 
-<p>Raster data often has a <code class="highlighter-rouge">NoDataValue</code> associated with it. This is a value
+<p>Raster data often has a <code class="language-plaintext highlighter-rouge">NoDataValue</code> associated with it. This is a value
 assigned to pixels where data is missing or no data were collected.</p>
 
 <p>By default the shape of a raster is always rectangular. So if we have  a dataset
 that has a shape that isn’t rectangular, some pixels at the edge of the raster
-will have <code class="highlighter-rouge">NoDataValue</code>s. This can happen if the data were collected by an
+will have <code class="language-plaintext highlighter-rouge">NoDataValue</code>s. This can happen if the data were collected by an
 airplane which only flew over some part of a defined region.</p>
 
 <p>In the image below, no pixels are black meaning we have data for every raster “cell”.</p>
 
 <p><img src="../fig/rmd-04-demonstrate-no-data-black-ggplot-1.png" title="plot of chunk demonstrate-no-data-black-ggplot" alt="plot of chunk demonstrate-no-data-black-ggplot" width="612" style="display: block; margin: auto;" /></p>
 
-<p>If your raster has <code class="highlighter-rouge">NA</code> values but you aren’t sure where they are, you can deliberately plot them in a particular colour. This can be useful when checking a dataset’s coverage. For instance, sometimes data can be missing where a sensor could not ‘see’ its target data, and you may wish to locate that missing data and fill it in.</p>
+<p>If your raster has <code class="language-plaintext highlighter-rouge">NA</code> values but you aren’t sure where they are, you can deliberately plot them in a particular colour. This can be useful when checking a dataset’s coverage. For instance, sometimes data can be missing where a sensor could not ‘see’ its target data, and you may wish to locate that missing data and fill it in.</p>
 
-<p>To highlight <code class="highlighter-rouge">NA</code> values in ggplot, alter the <code class="highlighter-rouge">scale_fill_*()</code> layer to contain a colour instruction for <code class="highlighter-rouge">NA</code> values, like <code class="highlighter-rouge">scale_fill_viridis_c(na.value = 'deeppink')</code></p>
+<p>To highlight <code class="language-plaintext highlighter-rouge">NA</code> values in ggplot, alter the <code class="language-plaintext highlighter-rouge">scale_fill_*()</code> layer to contain a colour instruction for <code class="language-plaintext highlighter-rouge">NA</code> values, like <code class="language-plaintext highlighter-rouge">scale_fill_viridis_c(na.value = 'deeppink')</code></p>
 
 <p><img src="../fig/rmd-04-napink-1.png" title="plot of chunk napink" alt="plot of chunk napink" width="612" style="display: block; margin: auto;" /></p>
 
 <p>The value that is conventionally used to take note of missing data (the
-<code class="highlighter-rouge">NoDataValue</code> value) varies by the raster data type. For floating-point rasters,
-the figure <code class="highlighter-rouge">-3.4e+38</code> is a common default, and for integers, <code class="highlighter-rouge">-9999</code> is
+<code class="language-plaintext highlighter-rouge">NoDataValue</code> value) varies by the raster data type. For floating-point rasters,
+the figure <code class="language-plaintext highlighter-rouge">-3.4e+38</code> is a common default, and for integers, <code class="language-plaintext highlighter-rouge">-9999</code> is
 common. Some disciplines have specific conventions that vary from these
 common values.</p>
 
-<p>In some cases, other <code class="highlighter-rouge">NA</code> values may be more appropriate. An <code class="highlighter-rouge">NA</code> value should
+<p>In some cases, other <code class="language-plaintext highlighter-rouge">NA</code> values may be more appropriate. An <code class="language-plaintext highlighter-rouge">NA</code> value should
 be a) outside the range of valid values, and b) a value that fits the data type
 in use. For instance, if your data ranges continuously from -20 to 100, 0 is
-not an acceptable <code class="highlighter-rouge">NA</code> value! Or, for categories that number 1-15, 0 might be
-fine for <code class="highlighter-rouge">NA</code>, but using -.000003 will force you to save the GeoTIFF on disk
+not an acceptable <code class="language-plaintext highlighter-rouge">NA</code> value! Or, for categories that number 1-15, 0 might be
+fine for <code class="language-plaintext highlighter-rouge">NA</code>, but using -.000003 will force you to save the GeoTIFF on disk
 as a floating point raster, resulting in a bigger file.</p>
 
 <p>If we are lucky, our GeoTIFF file has a tag that tells us what is the
-<code class="highlighter-rouge">NoDataValue</code>. If we are less lucky, we can find that information in the
-raster’s metadata. If a <code class="highlighter-rouge">NoDataValue</code> was stored in the GeoTIFF tag, when R
-opens up the raster, it will assign each instance of the value to <code class="highlighter-rouge">NA</code>. Values
-of <code class="highlighter-rouge">NA</code> will be ignored by R as demonstrated above.</p>
+<code class="language-plaintext highlighter-rouge">NoDataValue</code>. If we are less lucky, we can find that information in the
+raster’s metadata. If a <code class="language-plaintext highlighter-rouge">NoDataValue</code> was stored in the GeoTIFF tag, when R
+opens up the raster, it will assign each instance of the value to <code class="language-plaintext highlighter-rouge">NA</code>. Values
+of <code class="language-plaintext highlighter-rouge">NA</code> will be ignored by R as demonstrated above.</p>
 
 <blockquote class="callout">
   <h2 id="challenge-1">Challenge</h2>
-  <p>Use the output from the <code class="highlighter-rouge">GDALinfo()</code> function to find out what <code class="highlighter-rouge">NoDataValue</code> is used for our <code class="highlighter-rouge">erie_bathy</code> dataset.</p>
+  <p>Use the output from the <code class="language-plaintext highlighter-rouge">GDALinfo()</code> function to find out what <code class="language-plaintext highlighter-rouge">NoDataValue</code> is used for our <code class="language-plaintext highlighter-rouge">erie_bathy</code> dataset.</p>
 
   <blockquote class="solution">
     <h2 id="answers-1">Answers</h2>
@@ -647,7 +660,11 @@ of <code class="highlighter-rouge">NA</code> will be ignored by R as demonstrate
     <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">GDALinfo</span><span class="p">(</span><span class="s2">"data//erie_bathy.tif"</span><span class="p">)</span><span class="w">
 </span></code></pre></div>    </div>
 
-    <div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rows        623 
+    <div class="language-plaintext error highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Warning in getProjectionRef(x, OVERRIDE_PROJ_DATUM_WITH_TOWGS84 = OVERRIDE_PROJ_DATUM_WITH_TOWGS84, : Discarded datum Unknown_based_on_GRS80_ellipsoid in Proj4 definition: +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs,
+ but +towgs84= values preserved
+</code></pre></div>    </div>
+
+    <div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rows        623 
 columns     1843 
 bands       1 
 lower left origin.x        245701 
@@ -671,13 +688,13 @@ Metadata:
 AREA_OR_POINT=Area 
 </code></pre></div>    </div>
 
-    <p><code class="highlighter-rouge">NoDataValue</code> are encoded as -3.4e+38.</p>
+    <p><code class="language-plaintext highlighter-rouge">NoDataValue</code> are encoded as -3.4e+38.</p>
   </blockquote>
 </blockquote>
 
 <h2 id="bad-data-values-in-rasters">Bad Data Values in Rasters</h2>
 
-<p>Bad data values are different from <code class="highlighter-rouge">NoDataValue</code>s. Bad data values are values
+<p>Bad data values are different from <code class="language-plaintext highlighter-rouge">NoDataValue</code>s. Bad data values are values
 that fall outside of the applicable range of a dataset.</p>
 
 <p>Examples of Bad Data Values:</p>
@@ -707,34 +724,34 @@ elevation values less than 0m with a contrasting colour.</p>
 <h2 id="create-a-histogram-of-raster-values">Create A Histogram of Raster Values</h2>
 
 <p>We can explore the distribution of values contained within our raster using the
-<code class="highlighter-rouge">geom_histogram()</code> function which produces a histogram. Histograms are often
+<code class="language-plaintext highlighter-rouge">geom_histogram()</code> function which produces a histogram. Histograms are often
 useful in identifying outliers and bad data values in our raster data.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
     </span><span class="n">geom_histogram</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">erie_bathy_df</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">erie_bathy</span><span class="p">))</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 </code></pre></div></div>
 
-<div class="error highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Warning: Removed 64779 rows containing non-finite values (stat_bin).
+<div class="language-plaintext error highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Warning: Removed 64779 rows containing non-finite values (stat_bin).
 </code></pre></div></div>
 
 <p><img src="../fig/rmd-04-view-raster-histogram-1.png" title="plot of chunk view-raster-histogram" alt="plot of chunk view-raster-histogram" width="612" style="display: block; margin: auto;" /></p>
 
 <p>Notice that a warning message is thrown when R creates the histogram.</p>
 
-<p><code class="highlighter-rouge">stat_bin()</code> using <code class="highlighter-rouge">bins = 30</code>. Pick better value with <code class="highlighter-rouge">binwidth</code>.</p>
+<p><code class="language-plaintext highlighter-rouge">stat_bin()</code> using <code class="language-plaintext highlighter-rouge">bins = 30</code>. Pick better value with <code class="language-plaintext highlighter-rouge">binwidth</code>.</p>
 
-<p>This warning is caused by a default setting in <code class="highlighter-rouge">geom_histogram</code> enforcing that there are
+<p>This warning is caused by a default setting in <code class="language-plaintext highlighter-rouge">geom_histogram</code> enforcing that there are
 30 bins for the data. We can define the number of bins we want in the histogram
-by using the <code class="highlighter-rouge">bins</code> value in the <code class="highlighter-rouge">geom_histogram()</code> function.</p>
+by using the <code class="language-plaintext highlighter-rouge">bins</code> value in the <code class="language-plaintext highlighter-rouge">geom_histogram()</code> function.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
     </span><span class="n">geom_histogram</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">erie_bathy_df</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">erie_bathy</span><span class="p">),</span><span class="w"> </span><span class="n">bins</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">40</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="error highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Warning: Removed 64779 rows containing non-finite values (stat_bin).
+<div class="language-plaintext error highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Warning: Removed 64779 rows containing non-finite values (stat_bin).
 </code></pre></div></div>
 
 <p><img src="../fig/rmd-04-view-raster-histogram2-1.png" title="plot of chunk view-raster-histogram2" alt="plot of chunk view-raster-histogram2" width="612" style="display: block; margin: auto;" /></p>
@@ -747,7 +764,7 @@ no bad data values in this particular raster.</p>
 <blockquote class="callout">
   <h2 id="more-resources">More Resources</h2>
   <ul>
-    <li><a href="http://cran.r-project.org/package=raster">Read more about the <code class="highlighter-rouge">raster</code> package in R.</a></li>
+    <li><a href="http://cran.r-project.org/package=raster">Read more about the <code class="language-plaintext highlighter-rouge">raster</code> package in R.</a></li>
   </ul>
 </blockquote>
 
@@ -760,7 +777,7 @@ no bad data values in this particular raster.</p>
     <li><p>The GeoTIFF file format includes metadata about the raster data.</p>
 </li>
     
-    <li><p>To plot raster data with the <code class="highlighter-rouge">ggplot2</code> package, we need to convert it to a dataframe.</p>
+    <li><p>To plot raster data with the <code class="language-plaintext highlighter-rouge">ggplot2</code> package, we need to convert it to a dataframe.</p>
 </li>
     
     <li><p>R stores CRS information in the Proj4 format.</p>
@@ -822,7 +839,7 @@ no bad data values in this particular raster.</p>
   <div class="row">
     <div class="col-md-6 copyright" align="left">
 	
-	Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a> 2018–2020
+	Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a> 2018–2021
 	by <a href="https://carpentries.org/">The Carpentries</a>
         <br>
         Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a> 2016–2018

@@ -19,7 +19,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="last-modified" content="2020-02-18 18:18:21 -0500">
+    <meta http-equiv="last-modified" content="2021-09-22 15:29:24 -0600">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- meta "search-domain" used for google site search function google_search() -->
     <meta name="search-domain" value="">
@@ -280,9 +280,9 @@ together and combine them into a single plot.</p>
 
 <h2 id="import-shapefiles">Import Shapefiles</h2>
 
-<p>We will use the <code class="highlighter-rouge">sf</code> package to work with vector data in R. Notice that the
-<code class="highlighter-rouge">rgdal</code> package automatically loads when <code class="highlighter-rouge">sf</code> is loaded. We will also use the
-<code class="highlighter-rouge">raster</code> package, which we will work with in more detail in later episodes, so we can explore raster and vector spatial metadata using similar commands. Make sure you have the <code class="highlighter-rouge">sf</code> library loaded.</p>
+<p>We will use the <code class="language-plaintext highlighter-rouge">sf</code> package to work with vector data in R. Notice that the
+<code class="language-plaintext highlighter-rouge">rgdal</code> package automatically loads when <code class="language-plaintext highlighter-rouge">sf</code> is loaded. We will also use the
+<code class="language-plaintext highlighter-rouge">raster</code> package, which we will work with in more detail in later episodes, so we can explore raster and vector spatial metadata using similar commands. Make sure you have the <code class="language-plaintext highlighter-rouge">sf</code> library loaded.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">sf</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
@@ -295,7 +295,7 @@ together and combine them into a single plot.</p>
 </ul>
 
 <p>The first shapefile that we will open contains the outline of Lake Erie. To
-import shapefiles we use the <code class="highlighter-rouge">sf</code> function <code class="highlighter-rouge">st_read()</code>. <code class="highlighter-rouge">st_read()</code> requires
+import shapefiles we use the <code class="language-plaintext highlighter-rouge">sf</code> function <code class="language-plaintext highlighter-rouge">st_read()</code>. <code class="language-plaintext highlighter-rouge">st_read()</code> requires
 the file path to the shapefile.</p>
 
 <p>Let’s import our outline:</p>
@@ -304,19 +304,20 @@ the file path to the shapefile.</p>
   </span><span class="s2">"data/erie_outline.shp"</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Reading layer `erie_outline' from data source `/home/jose/Documents/Science/Workshops/2020-02_glatos/glatos-spatial_workshop_materials/_episodes_rmd/data/erie_outline.shp' using driver `ESRI Shapefile'
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Reading layer `erie_outline' from data source 
+  `/home/jemma/Documents/Science/Workshops/2021-09_gleon-spatial/gleon-spatial_workshop_materials/_episodes_rmd/data/erie_outline.shp' 
+  using driver `ESRI Shapefile'
 Simple feature collection with 1 feature and 7 fields
-geometry type:  POLYGON
-dimension:      XY
-bbox:           xmin: 285728.3 ymin: 4580281 xmax: 682178.4 ymax: 4752964
-epsg (SRID):    NA
-proj4string:    +proj=utm +zone=17 +ellps=GRS80 +units=m +no_defs
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 285728.3 ymin: 4580281 xmax: 682178.4 ymax: 4752964
+CRS:           unknown
 </code></pre></div></div>
 
 <h2 id="shapefile-metadata--attributes">Shapefile Metadata &amp; Attributes</h2>
 
-<p>When we import the <code class="highlighter-rouge">Lake_Erie_Shoreline</code> shapefile layer into R (as our
-<code class="highlighter-rouge">erie_outline</code> object), the <code class="highlighter-rouge">st_read()</code> function automatically stores
+<p>When we import the <code class="language-plaintext highlighter-rouge">Lake_Erie_Shoreline</code> shapefile layer into R (as our
+<code class="language-plaintext highlighter-rouge">erie_outline</code> object), the <code class="language-plaintext highlighter-rouge">st_read()</code> function automatically stores
 information about the data. We are particularly interested in the geospatial
 metadata, describing the format, CRS, extent, and other components of
 the vector data, and the attributes which describe properties associated
@@ -340,37 +341,73 @@ the shapefile. Note that the spatial extent for a shapefile represents the combi
 extent for all spatial objects in the shapefile.</li>
 </ol>
 
-<p>We can view shapefile metadata using the <code class="highlighter-rouge">st_geometry_type()</code>, <code class="highlighter-rouge">st_crs()</code> and 
-<code class="highlighter-rouge">st_bbox()</code> functions. First, let’s view the geometry type for our outline 
+<p>We can view shapefile metadata using the <code class="language-plaintext highlighter-rouge">st_geometry_type()</code>, <code class="language-plaintext highlighter-rouge">st_crs()</code> and 
+<code class="language-plaintext highlighter-rouge">st_bbox()</code> functions. First, let’s view the geometry type for our outline 
 shapefile:</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">st_geometry_type</span><span class="p">(</span><span class="n">erie_outline</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] POLYGON
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] POLYGON
 18 Levels: GEOMETRY POINT LINESTRING POLYGON MULTIPOINT ... TRIANGLE
 </code></pre></div></div>
 
-<p>Our <code class="highlighter-rouge">erie_outline</code> is a polygon object. The 18 levels shown below
+<p>Our <code class="language-plaintext highlighter-rouge">erie_outline</code> is a polygon object. The 18 levels shown below
 our output list the possible categories of the geometry type. 
 Now let’s check what CRS this file data is in:</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">st_crs</span><span class="p">(</span><span class="n">erie_outline</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Coordinate Reference System:
-  No EPSG code
-  proj4string: "+proj=utm +zone=17 +ellps=GRS80 +units=m +no_defs"
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Coordinate Reference System:
+  User input: unknown 
+  wkt:
+PROJCRS["unknown",
+    BASEGEOGCRS["GCS_unknown",
+        DATUM["D_Unknown_based_on_GRS80_ellipsoid",
+            ELLIPSOID["GRS 1980",6378137,298.257222101,
+                LENGTHUNIT["metre",1],
+                ID["EPSG",7019]]],
+        PRIMEM["Greenwich",0,
+            ANGLEUNIT["Degree",0.0174532925199433]]],
+    CONVERSION["UTM zone 17N",
+        METHOD["Transverse Mercator",
+            ID["EPSG",9807]],
+        PARAMETER["Latitude of natural origin",0,
+            ANGLEUNIT["Degree",0.0174532925199433],
+            ID["EPSG",8801]],
+        PARAMETER["Longitude of natural origin",-81,
+            ANGLEUNIT["Degree",0.0174532925199433],
+            ID["EPSG",8802]],
+        PARAMETER["Scale factor at natural origin",0.9996,
+            SCALEUNIT["unity",1],
+            ID["EPSG",8805]],
+        PARAMETER["False easting",500000,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8806]],
+        PARAMETER["False northing",0,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8807]],
+        ID["EPSG",16017]],
+    CS[Cartesian,2],
+        AXIS["(E)",east,
+            ORDER[1],
+            LENGTHUNIT["metre",1,
+                ID["EPSG",9001]]],
+        AXIS["(N)",north,
+            ORDER[2],
+            LENGTHUNIT["metre",1,
+                ID["EPSG",9001]]]]
 </code></pre></div></div>
 
 <p>Our data in the CRS <strong>UTM zone 17N</strong>. The CRS is critical to 
 interpreting the object’s extent values as it specifies units. To find
-the extent of our outline, we can use the <code class="highlighter-rouge">st_bbox()</code> function:</p>
+the extent of our outline, we can use the <code class="language-plaintext highlighter-rouge">st_bbox()</code> function:</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">st_bbox</span><span class="p">(</span><span class="n">erie_outline</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     xmin      ymin      xmax      ymax 
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     xmin      ymin      xmax      ymax 
  285728.3 4580281.1  682178.4 4752964.4 
 </code></pre></div></div>
 
@@ -385,12 +422,11 @@ by printing it to the screen:</p>
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">erie_outline</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Simple feature collection with 1 feature and 7 fields
-geometry type:  POLYGON
-dimension:      XY
-bbox:           xmin: 285728.3 ymin: 4580281 xmax: 682178.4 ymax: 4752964
-epsg (SRID):    NA
-proj4string:    +proj=utm +zone=17 +ellps=GRS80 +units=m +no_defs
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Simple feature collection with 1 feature and 7 fields
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 285728.3 ymin: 4580281 xmax: 682178.4 ymax: 4752964
+CRS:           unknown
   OBJECTID PERIMETER LAKE_NAME ID ReferenceC  ShapeSTAre ShapeSTLen
 1        1   2445211 Lake Erie  1   60402132 25830205908    2445211
                         geometry
@@ -403,13 +439,13 @@ plot different features.</p>
 
 <h2 id="plot-a-shapefile">Plot a Shapefile</h2>
 
-<p>Let’s visualize the data in our <code class="highlighter-rouge">sf</code> object using the <code class="highlighter-rouge">ggplot</code> package. Unlike 
+<p>Let’s visualize the data in our <code class="language-plaintext highlighter-rouge">sf</code> object using the <code class="language-plaintext highlighter-rouge">ggplot</code> package. Unlike 
 with raster data, we do not need to convert vector data to a dataframe before 
-plotting with <code class="highlighter-rouge">ggplot</code>.</p>
+plotting with <code class="language-plaintext highlighter-rouge">ggplot</code>.</p>
 
 <p>We’re going to customize our boundary plot by setting the size, color, and fill 
-for our plot. When plotting <code class="highlighter-rouge">sf</code> objects with <code class="highlighter-rouge">ggplot2</code>, you do not need to use 
-the <code class="highlighter-rouge">coord_sf()</code> coordinate system.</p>
+for our plot. When plotting <code class="language-plaintext highlighter-rouge">sf</code> objects with <code class="language-plaintext highlighter-rouge">ggplot2</code>, you do not need to use 
+the <code class="language-plaintext highlighter-rouge">coord_sf()</code> coordinate system.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
 
@@ -425,7 +461,7 @@ the <code class="highlighter-rouge">coord_sf()</code> coordinate system.</p>
   <h2 id="challenge-import-line-and-point-shapefiles">Challenge: Import Line and Point Shapefiles</h2>
 
   <p>Using the steps above, import the erie_contours layer into
-R. Call the object <code class="highlighter-rouge">erie_contours</code>.</p>
+R. Call the object <code class="language-plaintext highlighter-rouge">erie_contours</code>.</p>
 
   <p>Answer the following questions:</p>
 
@@ -452,13 +488,14 @@ R. Call the object <code class="highlighter-rouge">erie_contours</code>.</p>
     <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">erie_contours</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">st_read</span><span class="p">(</span><span class="s2">"data/erie_contours.shp"</span><span class="p">)</span><span class="w">
 </span></code></pre></div>    </div>
 
-    <div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Reading layer `erie_contours' from data source `/home/jose/Documents/Science/Workshops/2020-02_glatos/glatos-spatial_workshop_materials/_episodes_rmd/data/erie_contours.shp' using driver `ESRI Shapefile'
+    <div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Reading layer `erie_contours' from data source 
+  `/home/jemma/Documents/Science/Workshops/2021-09_gleon-spatial/gleon-spatial_workshop_materials/_episodes_rmd/data/erie_contours.shp' 
+  using driver `ESRI Shapefile'
 Simple feature collection with 8764 features and 3 fields
-geometry type:  LINESTRING
-dimension:      XY
-bbox:           xmin: -83.57167 ymin: 41.36359 xmax: -78.7695 ymax: 42.9103
-epsg (SRID):    4326
-proj4string:    +proj=longlat +datum=WGS84 +no_defs
+Geometry type: LINESTRING
+Dimension:     XY
+Bounding box:  xmin: -83.57167 ymin: 41.36359 xmax: -78.7695 ymax: 42.9103
+Geodetic CRS:  GCS_unknown
 </code></pre></div>    </div>
 
     <p>Then we check its class:</p>
@@ -466,26 +503,40 @@ proj4string:    +proj=longlat +datum=WGS84 +no_defs
     <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">class</span><span class="p">(</span><span class="n">erie_contours</span><span class="p">)</span><span class="w">
 </span></code></pre></div>    </div>
 
-    <div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] "sf"         "data.frame"
+    <div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] "sf"         "data.frame"
 </code></pre></div>    </div>
     <p>We also check the CRS and extent of the object:</p>
 
     <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">st_crs</span><span class="p">(</span><span class="n">erie_contours</span><span class="p">)</span><span class="w">
 </span></code></pre></div>    </div>
 
-    <div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Coordinate Reference System:
-  EPSG: 4326 
-  proj4string: "+proj=longlat +datum=WGS84 +no_defs"
+    <div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Coordinate Reference System:
+  User input: GCS_unknown 
+  wkt:
+GEOGCRS["GCS_unknown",
+    DATUM["World Geodetic System 1984",
+        ELLIPSOID["WGS 84",6378137,298.257223563,
+            LENGTHUNIT["metre",1]],
+        ID["EPSG",6326]],
+    PRIMEM["Greenwich",0,
+        ANGLEUNIT["Degree",0.0174532925199433]],
+    CS[ellipsoidal,2],
+        AXIS["longitude",east,
+            ORDER[1],
+            ANGLEUNIT["Degree",0.0174532925199433]],
+        AXIS["latitude",north,
+            ORDER[2],
+            ANGLEUNIT["Degree",0.0174532925199433]]]
 </code></pre></div>    </div>
 
     <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">st_bbox</span><span class="p">(</span><span class="n">erie_contours</span><span class="p">)</span><span class="w">
 </span></code></pre></div>    </div>
 
-    <div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     xmin      ymin      xmax      ymax 
+    <div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     xmin      ymin      xmax      ymax 
 -83.57167  41.36359 -78.76950  42.91030 
 </code></pre></div>    </div>
     <p>To see the number of objects in the file, we can look at the output from when we read these objects into R. 
-<code class="highlighter-rouge">erie_contours</code> contains 8764 features (all lines).</p>
+<code class="language-plaintext highlighter-rouge">erie_contours</code> contains 8764 features (all lines).</p>
   </blockquote>
 </blockquote>
 
@@ -498,10 +549,10 @@ proj4string:    +proj=longlat +datum=WGS84 +no_defs
     <li><p>Shapefile metadata include geometry type, CRS, and extent.</p>
 </li>
     
-    <li><p>Load spatial objects into R with the <code class="highlighter-rouge">st_read()</code> function.</p>
+    <li><p>Load spatial objects into R with the <code class="language-plaintext highlighter-rouge">st_read()</code> function.</p>
 </li>
     
-    <li><p>Spatial objects can be plotted directly with <code class="highlighter-rouge">ggplot</code> using the <code class="highlighter-rouge">geom_sf()</code> function. No need to convert to a dataframe.</p>
+    <li><p>Spatial objects can be plotted directly with <code class="language-plaintext highlighter-rouge">ggplot</code> using the <code class="language-plaintext highlighter-rouge">geom_sf()</code> function. No need to convert to a dataframe.</p>
 </li>
     
   </ul>
@@ -557,7 +608,7 @@ proj4string:    +proj=longlat +datum=WGS84 +no_defs
   <div class="row">
     <div class="col-md-6 copyright" align="left">
 	
-	Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a> 2018–2020
+	Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a> 2018–2021
 	by <a href="https://carpentries.org/">The Carpentries</a>
         <br>
         Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a> 2016–2018

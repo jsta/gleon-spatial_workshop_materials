@@ -68,8 +68,8 @@ str(fish_tracks)
 ~~~
 'data.frame':	1366 obs. of  6 variables:
  $ animal_id    : int  16176001 16176001 16176001 16176001 16176001 16176001 16176001 16176001 16176001 16176001 ...
- $ bin_timestamp: Factor w/ 1226 levels "2014-05-06 04:59:17",..: 1 2 2 3 4 5 6 7 8 9 ...
- $ record_type  : Factor w/ 2 levels "detection","interpolated": 1 1 1 2 1 2 2 2 2 2 ...
+ $ bin_timestamp: chr  "2014-05-06 04:59:17" "2014-05-06 07:59:17" "2014-05-06 07:59:17" "2014-05-06 10:59:17" ...
+ $ record_type  : chr  "detection" "detection" "detection" "interpolated" ...
  $ X            : num  335496 334227 335496 334107 335496 ...
  $ Y            : num  4614819 4609585 4614819 4611017 4614819 ...
  $ utmZone      : int  17 17 17 17 17 17 17 17 17 17 ...
@@ -171,8 +171,44 @@ st_crs(erie_outline)
 
 ~~~
 Coordinate Reference System:
-  No EPSG code
-  proj4string: "+proj=utm +zone=17 +ellps=GRS80 +units=m +no_defs"
+  User input: unknown 
+  wkt:
+PROJCRS["unknown",
+    BASEGEOGCRS["GCS_unknown",
+        DATUM["D_Unknown_based_on_GRS80_ellipsoid",
+            ELLIPSOID["GRS 1980",6378137,298.257222101,
+                LENGTHUNIT["metre",1],
+                ID["EPSG",7019]]],
+        PRIMEM["Greenwich",0,
+            ANGLEUNIT["Degree",0.0174532925199433]]],
+    CONVERSION["UTM zone 17N",
+        METHOD["Transverse Mercator",
+            ID["EPSG",9807]],
+        PARAMETER["Latitude of natural origin",0,
+            ANGLEUNIT["Degree",0.0174532925199433],
+            ID["EPSG",8801]],
+        PARAMETER["Longitude of natural origin",-81,
+            ANGLEUNIT["Degree",0.0174532925199433],
+            ID["EPSG",8802]],
+        PARAMETER["Scale factor at natural origin",0.9996,
+            SCALEUNIT["unity",1],
+            ID["EPSG",8805]],
+        PARAMETER["False easting",500000,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8806]],
+        PARAMETER["False northing",0,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8807]],
+        ID["EPSG",16017]],
+    CS[Cartesian,2],
+        AXIS["(E)",east,
+            ORDER[1],
+            LENGTHUNIT["metre",1,
+                ID["EPSG",9001]]],
+        AXIS["(N)",north,
+            ORDER[2],
+            LENGTHUNIT["metre",1,
+                ID["EPSG",9001]]]]
 ~~~
 {: .output}
 
@@ -194,8 +230,44 @@ utm17nCRS
 
 ~~~
 Coordinate Reference System:
-  No EPSG code
-  proj4string: "+proj=utm +zone=17 +ellps=GRS80 +units=m +no_defs"
+  User input: unknown 
+  wkt:
+PROJCRS["unknown",
+    BASEGEOGCRS["GCS_unknown",
+        DATUM["D_Unknown_based_on_GRS80_ellipsoid",
+            ELLIPSOID["GRS 1980",6378137,298.257222101,
+                LENGTHUNIT["metre",1],
+                ID["EPSG",7019]]],
+        PRIMEM["Greenwich",0,
+            ANGLEUNIT["Degree",0.0174532925199433]]],
+    CONVERSION["UTM zone 17N",
+        METHOD["Transverse Mercator",
+            ID["EPSG",9807]],
+        PARAMETER["Latitude of natural origin",0,
+            ANGLEUNIT["Degree",0.0174532925199433],
+            ID["EPSG",8801]],
+        PARAMETER["Longitude of natural origin",-81,
+            ANGLEUNIT["Degree",0.0174532925199433],
+            ID["EPSG",8802]],
+        PARAMETER["Scale factor at natural origin",0.9996,
+            SCALEUNIT["unity",1],
+            ID["EPSG",8805]],
+        PARAMETER["False easting",500000,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8806]],
+        PARAMETER["False northing",0,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8807]],
+        ID["EPSG",16017]],
+    CS[Cartesian,2],
+        AXIS["(E)",east,
+            ORDER[1],
+            LENGTHUNIT["metre",1,
+                ID["EPSG",9001]]],
+        AXIS["(N)",north,
+            ORDER[2],
+            LENGTHUNIT["metre",1,
+                ID["EPSG",9001]]]]
 ~~~
 {: .output}
 
@@ -241,8 +313,44 @@ st_crs(fish_locations)
 
 ~~~
 Coordinate Reference System:
-  No EPSG code
-  proj4string: "+proj=utm +zone=17 +ellps=GRS80 +units=m +no_defs"
+  User input: unknown 
+  wkt:
+PROJCRS["unknown",
+    BASEGEOGCRS["GCS_unknown",
+        DATUM["D_Unknown_based_on_GRS80_ellipsoid",
+            ELLIPSOID["GRS 1980",6378137,298.257222101,
+                LENGTHUNIT["metre",1],
+                ID["EPSG",7019]]],
+        PRIMEM["Greenwich",0,
+            ANGLEUNIT["Degree",0.0174532925199433]]],
+    CONVERSION["UTM zone 17N",
+        METHOD["Transverse Mercator",
+            ID["EPSG",9807]],
+        PARAMETER["Latitude of natural origin",0,
+            ANGLEUNIT["Degree",0.0174532925199433],
+            ID["EPSG",8801]],
+        PARAMETER["Longitude of natural origin",-81,
+            ANGLEUNIT["Degree",0.0174532925199433],
+            ID["EPSG",8802]],
+        PARAMETER["Scale factor at natural origin",0.9996,
+            SCALEUNIT["unity",1],
+            ID["EPSG",8805]],
+        PARAMETER["False easting",500000,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8806]],
+        PARAMETER["False northing",0,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8807]],
+        ID["EPSG",16017]],
+    CS[Cartesian,2],
+        AXIS["(E)",east,
+            ORDER[1],
+            LENGTHUNIT["metre",1,
+                ID["EPSG",9001]]],
+        AXIS["(N)",north,
+            ORDER[2],
+            LENGTHUNIT["metre",1,
+                ID["EPSG",9001]]]]
 ~~~
 {: .output}
 

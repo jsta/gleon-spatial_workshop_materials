@@ -19,7 +19,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="last-modified" content="2020-02-18 18:18:21 -0500">
+    <meta http-equiv="last-modified" content="2021-09-22 15:29:24 -0600">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- meta "search-domain" used for google site search function google_search() -->
     <meta name="search-domain" value="">
@@ -272,32 +272,32 @@
 data, and other prerequisites you will need to work through the examples in this episode.</p>
 </blockquote>
 
-<p>This episode will review how to import spatial points stored in <code class="highlighter-rouge">.csv</code> (Comma Separated Value) format into R as an <code class="highlighter-rouge">sf</code> spatial object. We will also reproject data imported from a shapefile format, export this data as a shapefile, and plot raster and vector data as layers in the same plot.</p>
+<p>This episode will review how to import spatial points stored in <code class="language-plaintext highlighter-rouge">.csv</code> (Comma Separated Value) format into R as an <code class="language-plaintext highlighter-rouge">sf</code> spatial object. We will also reproject data imported from a shapefile format, export this data as a shapefile, and plot raster and vector data as layers in the same plot.</p>
 
 <h2 id="spatial-data-in-text-format">Spatial Data in Text Format</h2>
 
-<p>The <code class="highlighter-rouge">fish_tracks.csv</code> file contains <code class="highlighter-rouge">x, y</code> (point) locations from a fish tracking study in Lake Erie.</p>
+<p>The <code class="language-plaintext highlighter-rouge">fish_tracks.csv</code> file contains <code class="language-plaintext highlighter-rouge">x, y</code> (point) locations from a fish tracking study in Lake Erie.</p>
 
 <p>We would like to:</p>
 
 <ul>
   <li>Create a map of fish tracking locations.</li>
-  <li>Export the data in a <code class="highlighter-rouge">shapefile</code> format to share with our colleagues. This
+  <li>Export the data in a <code class="language-plaintext highlighter-rouge">shapefile</code> format to share with our colleagues. This
 shapefile can be imported into any GIS software.</li>
   <li>Create a map showing fish management zones with tracking positions layered on top.</li>
 </ul>
 
-<p>Spatial data are sometimes stored in a text file format (<code class="highlighter-rouge">.txt</code> or <code class="highlighter-rouge">.csv</code>). If
-the text file has an associated <code class="highlighter-rouge">x</code> and <code class="highlighter-rouge">y</code> location column, then we can
-convert it into an <code class="highlighter-rouge">sf</code> spatial object. The <code class="highlighter-rouge">sf</code> object allows us to store both the <code class="highlighter-rouge">x,y</code> values that represent the coordinate location
+<p>Spatial data are sometimes stored in a text file format (<code class="language-plaintext highlighter-rouge">.txt</code> or <code class="language-plaintext highlighter-rouge">.csv</code>). If
+the text file has an associated <code class="language-plaintext highlighter-rouge">x</code> and <code class="language-plaintext highlighter-rouge">y</code> location column, then we can
+convert it into an <code class="language-plaintext highlighter-rouge">sf</code> spatial object. The <code class="language-plaintext highlighter-rouge">sf</code> object allows us to store both the <code class="language-plaintext highlighter-rouge">x,y</code> values that represent the coordinate location
 of each point and the associated attribute data - or columns describing each
 feature in the spatial object.</p>
 
-<p>We will continue using the <code class="highlighter-rouge">sf</code> package in this episode.</p>
+<p>We will continue using the <code class="language-plaintext highlighter-rouge">sf</code> package in this episode.</p>
 
 <h2 id="import-csv">Import .csv</h2>
-<p>To begin let’s import a <code class="highlighter-rouge">.csv</code> file that contains fish tracking coordinate <code class="highlighter-rouge">x, y</code>
-locations in Lake Erie (<code class="highlighter-rouge">fish_tracks.csv</code>) and look at the
+<p>To begin let’s import a <code class="language-plaintext highlighter-rouge">.csv</code> file that contains fish tracking coordinate <code class="language-plaintext highlighter-rouge">x, y</code>
+locations in Lake Erie (<code class="language-plaintext highlighter-rouge">fish_tracks.csv</code>) and look at the
 structure of that new object:</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fish_tracks</span><span class="w"> </span><span class="o">&lt;-</span><span class="w">
@@ -306,16 +306,16 @@ structure of that new object:</p>
 </span><span class="n">str</span><span class="p">(</span><span class="n">fish_tracks</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>'data.frame':	1366 obs. of  6 variables:
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>'data.frame':	1366 obs. of  6 variables:
  $ animal_id    : int  16176001 16176001 16176001 16176001 16176001 16176001 16176001 16176001 16176001 16176001 ...
- $ bin_timestamp: Factor w/ 1226 levels "2014-05-06 04:59:17",..: 1 2 2 3 4 5 6 7 8 9 ...
- $ record_type  : Factor w/ 2 levels "detection","interpolated": 1 1 1 2 1 2 2 2 2 2 ...
+ $ bin_timestamp: chr  "2014-05-06 04:59:17" "2014-05-06 07:59:17" "2014-05-06 07:59:17" "2014-05-06 10:59:17" ...
+ $ record_type  : chr  "detection" "detection" "detection" "interpolated" ...
  $ X            : num  335496 334227 335496 334107 335496 ...
  $ Y            : num  4614819 4609585 4614819 4611017 4614819 ...
  $ utmZone      : int  17 17 17 17 17 17 17 17 17 17 ...
 </code></pre></div></div>
 
-<p>We now have a data frame that contains 1366 location observations (rows) and 6 variables (attributes). Note that all of our character data was imported into R as factor (categorical) data. Next, let’s explore the dataframe to determine whether it contains columns with coordinate values. If we are lucky, our <code class="highlighter-rouge">.csv</code> will contain columns labeled:</p>
+<p>We now have a data frame that contains 1366 location observations (rows) and 6 variables (attributes). Note that all of our character data was imported into R as factor (categorical) data. Next, let’s explore the dataframe to determine whether it contains columns with coordinate values. If we are lucky, our <code class="language-plaintext highlighter-rouge">.csv</code> will contain columns labeled:</p>
 
 <ul>
   <li>“X” and “Y” OR</li>
@@ -328,30 +328,30 @@ structure of that new object:</p>
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">names</span><span class="p">(</span><span class="n">fish_tracks</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] "animal_id"     "bin_timestamp" "record_type"   "X"            
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] "animal_id"     "bin_timestamp" "record_type"   "X"            
 [5] "Y"             "utmZone"      
 </code></pre></div></div>
 
 <h2 id="identify-xy-location-columns">Identify X,Y Location Columns</h2>
 
-<p>Our column names include several fields that might contain spatial information. The <code class="highlighter-rouge">fish_tracks$X</code>
-and <code class="highlighter-rouge">fish_tracks$Y</code> columns contain coordinate values. We can confirm
+<p>Our column names include several fields that might contain spatial information. The <code class="language-plaintext highlighter-rouge">fish_tracks$X</code>
+and <code class="language-plaintext highlighter-rouge">fish_tracks$Y</code> columns contain coordinate values. We can confirm
 this by looking at the first six rows of our data.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">head</span><span class="p">(</span><span class="n">fish_tracks</span><span class="o">$</span><span class="n">X</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] 335496.0 334227.4 335496.0 334107.1 335496.0 335496.0
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] 335496.0 334227.4 335496.0 334107.1 335496.0 335496.0
 </code></pre></div></div>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">head</span><span class="p">(</span><span class="n">fish_tracks</span><span class="o">$</span><span class="n">Y</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] 4614819 4609585 4614819 4611017 4614819 4614819
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] 4614819 4609585 4614819 4611017 4614819 4614819
 </code></pre></div></div>
 
 <p>We have coordinate values in our data frame. In order to convert our
-data frame to an <code class="highlighter-rouge">sf</code> object, we also need to know the CRS
+data frame to an <code class="language-plaintext highlighter-rouge">sf</code> object, we also need to know the CRS
 associated with those coordinate values.</p>
 
 <p>There are several ways to figure out the CRS of spatial data in text format.</p>
@@ -364,66 +364,138 @@ file header or somewhere in the data columns.</li>
 </ol>
 
 <p>It is not typical to store CRS information in a column. But this particular
-file contains CRS information this way. The <code class="highlighter-rouge">utmZone</code> column
+file contains CRS information this way. The <code class="language-plaintext highlighter-rouge">utmZone</code> column
 contain the information that helps us determine the CRS:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">utmZone</code>: 17</li>
+  <li><code class="language-plaintext highlighter-rouge">utmZone</code>: 17</li>
 </ul>
 
 <p>In
 <a href="/09-vector-when-data-dont-line-up-crs/">When Vector Data Don’t Line Up - Handling Spatial Projection &amp; CRS in R</a>
-we learned about the components of a <code class="highlighter-rouge">proj4</code> string. We have everything we need
+we learned about the components of a <code class="language-plaintext highlighter-rouge">proj4</code> string. We have everything we need
 to assign a CRS to our data frame.</p>
 
-<p>To create the <code class="highlighter-rouge">proj4</code> associated with UTM Zone 17 WGS84 we can look up the
+<p>To create the <code class="language-plaintext highlighter-rouge">proj4</code> associated with UTM Zone 17 WGS84 we can look up the
 projection on the <a href="http://www.spatialreference.org/ref/epsg/wgs-84-utm-zone-17n/">Spatial Reference website</a>, which contains a list of CRS formats for each projection. From here, we can extract the <a href="http://www.spatialreference.org/ref/epsg/wgs-84-utm-zone-17n/proj4/">proj4 string for UTM Zone 17N WGS84</a>.</p>
 
 <p>However, if we have other data in the UTM Zone 17N projection, it’s much
-easier to use the <code class="highlighter-rouge">st_crs()</code> function to extract the CRS in <code class="highlighter-rouge">proj4</code> format from
+easier to use the <code class="language-plaintext highlighter-rouge">st_crs()</code> function to extract the CRS in <code class="language-plaintext highlighter-rouge">proj4</code> format from
 that object and assign it to our new spatial object. We’ve seen this CRS before
-with our Lake Erie outline (<code class="highlighter-rouge">erie_outline</code>).</p>
+with our Lake Erie outline (<code class="language-plaintext highlighter-rouge">erie_outline</code>).</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">st_crs</span><span class="p">(</span><span class="n">erie_outline</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Coordinate Reference System:
-  No EPSG code
-  proj4string: "+proj=utm +zone=17 +ellps=GRS80 +units=m +no_defs"
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Coordinate Reference System:
+  User input: unknown 
+  wkt:
+PROJCRS["unknown",
+    BASEGEOGCRS["GCS_unknown",
+        DATUM["D_Unknown_based_on_GRS80_ellipsoid",
+            ELLIPSOID["GRS 1980",6378137,298.257222101,
+                LENGTHUNIT["metre",1],
+                ID["EPSG",7019]]],
+        PRIMEM["Greenwich",0,
+            ANGLEUNIT["Degree",0.0174532925199433]]],
+    CONVERSION["UTM zone 17N",
+        METHOD["Transverse Mercator",
+            ID["EPSG",9807]],
+        PARAMETER["Latitude of natural origin",0,
+            ANGLEUNIT["Degree",0.0174532925199433],
+            ID["EPSG",8801]],
+        PARAMETER["Longitude of natural origin",-81,
+            ANGLEUNIT["Degree",0.0174532925199433],
+            ID["EPSG",8802]],
+        PARAMETER["Scale factor at natural origin",0.9996,
+            SCALEUNIT["unity",1],
+            ID["EPSG",8805]],
+        PARAMETER["False easting",500000,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8806]],
+        PARAMETER["False northing",0,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8807]],
+        ID["EPSG",16017]],
+    CS[Cartesian,2],
+        AXIS["(E)",east,
+            ORDER[1],
+            LENGTHUNIT["metre",1,
+                ID["EPSG",9001]]],
+        AXIS["(N)",north,
+            ORDER[2],
+            LENGTHUNIT["metre",1,
+                ID["EPSG",9001]]]]
 </code></pre></div></div>
 
 <p>The output above shows that the points shapefile is in
 UTM zone 17N. We can thus use the CRS from that spatial object to convert our
-non-spatial dataframe into an <code class="highlighter-rouge">sf</code> object.</p>
+non-spatial dataframe into an <code class="language-plaintext highlighter-rouge">sf</code> object.</p>
 
-<p>Next, let’s create a <code class="highlighter-rouge">crs</code> object that we can use to define the CRS of our
-<code class="highlighter-rouge">sf</code> object when we create it.</p>
+<p>Next, let’s create a <code class="language-plaintext highlighter-rouge">crs</code> object that we can use to define the CRS of our
+<code class="language-plaintext highlighter-rouge">sf</code> object when we create it.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">utm17nCRS</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">st_crs</span><span class="p">(</span><span class="n">erie_outline</span><span class="p">)</span><span class="w">
 </span><span class="n">utm17nCRS</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Coordinate Reference System:
-  No EPSG code
-  proj4string: "+proj=utm +zone=17 +ellps=GRS80 +units=m +no_defs"
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Coordinate Reference System:
+  User input: unknown 
+  wkt:
+PROJCRS["unknown",
+    BASEGEOGCRS["GCS_unknown",
+        DATUM["D_Unknown_based_on_GRS80_ellipsoid",
+            ELLIPSOID["GRS 1980",6378137,298.257222101,
+                LENGTHUNIT["metre",1],
+                ID["EPSG",7019]]],
+        PRIMEM["Greenwich",0,
+            ANGLEUNIT["Degree",0.0174532925199433]]],
+    CONVERSION["UTM zone 17N",
+        METHOD["Transverse Mercator",
+            ID["EPSG",9807]],
+        PARAMETER["Latitude of natural origin",0,
+            ANGLEUNIT["Degree",0.0174532925199433],
+            ID["EPSG",8801]],
+        PARAMETER["Longitude of natural origin",-81,
+            ANGLEUNIT["Degree",0.0174532925199433],
+            ID["EPSG",8802]],
+        PARAMETER["Scale factor at natural origin",0.9996,
+            SCALEUNIT["unity",1],
+            ID["EPSG",8805]],
+        PARAMETER["False easting",500000,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8806]],
+        PARAMETER["False northing",0,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8807]],
+        ID["EPSG",16017]],
+    CS[Cartesian,2],
+        AXIS["(E)",east,
+            ORDER[1],
+            LENGTHUNIT["metre",1,
+                ID["EPSG",9001]]],
+        AXIS["(N)",north,
+            ORDER[2],
+            LENGTHUNIT["metre",1,
+                ID["EPSG",9001]]]]
 </code></pre></div></div>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">class</span><span class="p">(</span><span class="n">utm17nCRS</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] "crs"
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] "crs"
 </code></pre></div></div>
 
 <h2 id="csv-to-sf-object">.csv to sf object</h2>
-<p>Next, let’s convert our dataframe into an <code class="highlighter-rouge">sf</code> object. To do
+<p>Next, let’s convert our dataframe into an <code class="language-plaintext highlighter-rouge">sf</code> object. To do
 this, we need to specify:</p>
 
 <ol>
-  <li>The columns containing X (<code class="highlighter-rouge">easting</code>) and Y (<code class="highlighter-rouge">northing</code>) coordinate values</li>
-  <li>The CRS that the column coordinate represent (units are included in the CRS) - stored in our <code class="highlighter-rouge">utmCRS</code> object.</li>
+  <li>The columns containing X (<code class="language-plaintext highlighter-rouge">easting</code>) and Y (<code class="language-plaintext highlighter-rouge">northing</code>) coordinate values</li>
+  <li>The CRS that the column coordinate represent (units are included in the CRS) - stored in our <code class="language-plaintext highlighter-rouge">utmCRS</code> object.</li>
 </ol>
 
-<p>We will use the <code class="highlighter-rouge">st_as_sf()</code> function to perform the conversion.</p>
+<p>We will use the <code class="language-plaintext highlighter-rouge">st_as_sf()</code> function to perform the conversion.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fish_locations</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">st_as_sf</span><span class="p">(</span><span class="n">fish_tracks</span><span class="p">,</span><span class="w"> </span><span class="n">coords</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"X"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Y"</span><span class="p">),</span><span class="w"> 
                                    </span><span class="n">crs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">utm17nCRS</span><span class="p">)</span><span class="w">
@@ -434,9 +506,45 @@ this, we need to specify:</p>
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">st_crs</span><span class="p">(</span><span class="n">fish_locations</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Coordinate Reference System:
-  No EPSG code
-  proj4string: "+proj=utm +zone=17 +ellps=GRS80 +units=m +no_defs"
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Coordinate Reference System:
+  User input: unknown 
+  wkt:
+PROJCRS["unknown",
+    BASEGEOGCRS["GCS_unknown",
+        DATUM["D_Unknown_based_on_GRS80_ellipsoid",
+            ELLIPSOID["GRS 1980",6378137,298.257222101,
+                LENGTHUNIT["metre",1],
+                ID["EPSG",7019]]],
+        PRIMEM["Greenwich",0,
+            ANGLEUNIT["Degree",0.0174532925199433]]],
+    CONVERSION["UTM zone 17N",
+        METHOD["Transverse Mercator",
+            ID["EPSG",9807]],
+        PARAMETER["Latitude of natural origin",0,
+            ANGLEUNIT["Degree",0.0174532925199433],
+            ID["EPSG",8801]],
+        PARAMETER["Longitude of natural origin",-81,
+            ANGLEUNIT["Degree",0.0174532925199433],
+            ID["EPSG",8802]],
+        PARAMETER["Scale factor at natural origin",0.9996,
+            SCALEUNIT["unity",1],
+            ID["EPSG",8805]],
+        PARAMETER["False easting",500000,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8806]],
+        PARAMETER["False northing",0,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8807]],
+        ID["EPSG",16017]],
+    CS[Cartesian,2],
+        AXIS["(E)",east,
+            ORDER[1],
+            LENGTHUNIT["metre",1,
+                ID["EPSG",9001]]],
+        AXIS["(N)",north,
+            ORDER[2],
+            LENGTHUNIT["metre",1,
+                ID["EPSG",9001]]]]
 </code></pre></div></div>
 
 <h2 id="plot-spatial-object">Plot Spatial Object</h2>
@@ -453,8 +561,8 @@ this, we need to specify:</p>
 
 <p>In <a href="/01-vector-open-shapefile-in-r/">Open and Plot Shapefiles in R</a>
 we learned about spatial object extent. When we plot several spatial layers in
-R using <code class="highlighter-rouge">ggplot</code>, all of the layers of the plot are considered in setting the boundaries
-of the plot. To show this, let’s plot our <code class="highlighter-rouge">erie_outline</code> object with fish tracking point layer.</p>
+R using <code class="language-plaintext highlighter-rouge">ggplot</code>, all of the layers of the plot are considered in setting the boundaries
+of the plot. To show this, let’s plot our <code class="language-plaintext highlighter-rouge">erie_outline</code> object with fish tracking point layer.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
   </span><span class="n">geom_sf</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">erie_outline</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
@@ -464,19 +572,19 @@ of the plot. To show this, let’s plot our <code class="highlighter-rouge">erie
 
 <p><img src="../fig/rmd-03-plot-data-1.png" title="plot of chunk plot-data" alt="plot of chunk plot-data" width="612" style="display: block; margin: auto;" /></p>
 
-<p>When we plot the two layers together, <code class="highlighter-rouge">ggplot</code> sets the plot boundaries
+<p>When we plot the two layers together, <code class="language-plaintext highlighter-rouge">ggplot</code> sets the plot boundaries
 so that they are large enough to include all of the data included in all of the layers.
 That’s really handy!</p>
 
 <h2 id="export-a-shapefile">Export a Shapefile</h2>
 
-<p>We can write an R spatial object to a shapefile using the <code class="highlighter-rouge">st_write</code> function
-in <code class="highlighter-rouge">sf</code>. To do this we need the following arguments:</p>
+<p>We can write an R spatial object to a shapefile using the <code class="language-plaintext highlighter-rouge">st_write</code> function
+in <code class="language-plaintext highlighter-rouge">sf</code>. To do this we need the following arguments:</p>
 
 <ul>
-  <li>the name of the spatial object (<code class="highlighter-rouge">fish_locations</code>)</li>
+  <li>the name of the spatial object (<code class="language-plaintext highlighter-rouge">fish_locations</code>)</li>
   <li>the directory and file name where we want to save our shapefile
-         (to use <code class="highlighter-rouge">current = getwd()</code> or you can specify a different path)</li>
+         (to use <code class="language-plaintext highlighter-rouge">current = getwd()</code> or you can specify a different path)</li>
   <li>the driver which specifies the file format (ESRI Shapefile)</li>
 </ul>
 
@@ -495,10 +603,10 @@ in <code class="highlighter-rouge">sf</code>. To do this we need the following a
     <li><p>Know the projection (if any) of your point data prior to converting to a spatial object.</p>
 </li>
     
-    <li><p>Convert a data frame to an <code class="highlighter-rouge">sf</code> object using the <code class="highlighter-rouge">st_as_sf()</code> function.</p>
+    <li><p>Convert a data frame to an <code class="language-plaintext highlighter-rouge">sf</code> object using the <code class="language-plaintext highlighter-rouge">st_as_sf()</code> function.</p>
 </li>
     
-    <li><p>Export an <code class="highlighter-rouge">sf</code> object as text using the <code class="highlighter-rouge">st_write()</code> function.</p>
+    <li><p>Export an <code class="language-plaintext highlighter-rouge">sf</code> object as text using the <code class="language-plaintext highlighter-rouge">st_write()</code> function.</p>
 </li>
     
   </ul>
@@ -554,7 +662,7 @@ in <code class="highlighter-rouge">sf</code>. To do this we need the following a
   <div class="row">
     <div class="col-md-6 copyright" align="left">
 	
-	Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a> 2018–2020
+	Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a> 2018–2021
 	by <a href="https://carpentries.org/">The Carpentries</a>
         <br>
         Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a> 2016–2018

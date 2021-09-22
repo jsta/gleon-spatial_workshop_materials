@@ -19,7 +19,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="last-modified" content="2020-02-18 18:18:21 -0500">
+    <meta http-equiv="last-modified" content="2021-09-22 15:29:24 -0600">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- meta "search-domain" used for google site search function google_search() -->
     <meta name="search-domain" value="">
@@ -263,6 +263,11 @@
 
 </blockquote>
 
+<div class="language-plaintext error highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Warning in showSRID(SRS_string, format = "PROJ", multiline = "NO", prefer_proj
+= prefer_proj): Discarded datum Unknown_based_on_GRS80_ellipsoid in Proj4
+definition
+</code></pre></div></div>
+
 <blockquote class="prereq">
   <h2 id="things-youll-need-to-complete-this-episode">Things You’ll Need To Complete This Episode</h2>
 
@@ -306,12 +311,12 @@ that the raster layer matches the extent of the desired vector layers.</p>
 
 <h2 id="crop-a-raster-using-vector-extent">Crop a Raster Using Vector Extent</h2>
 
-<p>We can use the <code class="highlighter-rouge">crop()</code> function to crop a raster to the extent of another
+<p>We can use the <code class="language-plaintext highlighter-rouge">crop()</code> function to crop a raster to the extent of another
 spatial object. To do this, we need to specify the raster to be cropped and the
-spatial object that will be used to crop the raster. R will use the <code class="highlighter-rouge">extent</code> of
+spatial object that will be used to crop the raster. R will use the <code class="language-plaintext highlighter-rouge">extent</code> of
 the spatial object as the cropping boundary.</p>
 
-<p>To illustrate this, we will crop the elevation surface to only include the area of interest (AOI). Let’s start by plotting the full extent of the elevation data and overlay where the AOI falls within it. The boundaries of the AOI will be colored blue, and we use <code class="highlighter-rouge">fill = NA</code> to make the area transparent.</p>
+<p>To illustrate this, we will crop the elevation surface to only include the area of interest (AOI). Let’s start by plotting the full extent of the elevation data and overlay where the AOI falls within it. The boundaries of the AOI will be colored blue, and we use <code class="language-plaintext highlighter-rouge">fill = NA</code> to make the area transparent.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
   </span><span class="n">geom_raster</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">erie_bathy_df</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">erie_bathy</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> 
@@ -324,17 +329,17 @@ the spatial object as the cropping boundary.</p>
 
 <p>Now that we have visualized the area of the elevation data we want to subset, we can
 perform the cropping operation. We are going to create a new object with only
-the portion of the elevation data that falls within the boundaries of the AOI. The function <code class="highlighter-rouge">crop()</code> is from the raster package and doesn’t know how to deal with <code class="highlighter-rouge">sf</code> objects. Therefore, we first need to convert <code class="highlighter-rouge">erie_outline</code> from a <code class="highlighter-rouge">sf</code> object to “Spatial” object.</p>
+the portion of the elevation data that falls within the boundaries of the AOI. The function <code class="language-plaintext highlighter-rouge">crop()</code> is from the raster package and doesn’t know how to deal with <code class="language-plaintext highlighter-rouge">sf</code> objects. Therefore, we first need to convert <code class="language-plaintext highlighter-rouge">erie_outline</code> from a <code class="language-plaintext highlighter-rouge">sf</code> object to “Spatial” object.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">erie_bathy_Cropped</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">crop</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">erie_bathy</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">as_Spatial</span><span class="p">(</span><span class="n">erie_outline</span><span class="p">))</span><span class="w">
 </span></code></pre></div></div>
 
 <p>Now we can plot the cropped Lake Erie data, along with a boundary box showing 
 the full elevation data extent. However, remember, since this is raster data, we
-need to convert to a data frame in order to plot using <code class="highlighter-rouge">ggplot</code>. To get the 
-boundary box from Lake Erie, the <code class="highlighter-rouge">st_bbox()</code> will extract the 4 corners of the
+need to convert to a data frame in order to plot using <code class="language-plaintext highlighter-rouge">ggplot</code>. To get the 
+boundary box from Lake Erie, the <code class="language-plaintext highlighter-rouge">st_bbox()</code> will extract the 4 corners of the
 rectangle that encompass all the features contained in this object. The
-<code class="highlighter-rouge">st_as_sfc()</code> function converts these 4 coordinates into a polygon that we can plot:</p>
+<code class="language-plaintext highlighter-rouge">st_as_sfc()</code> function converts these 4 coordinates into a polygon that we can plot:</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">erie_bathy_Cropped_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as.data.frame</span><span class="p">(</span><span class="n">erie_bathy_Cropped</span><span class="p">,</span><span class="w"> </span><span class="n">xy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
 
@@ -351,7 +356,7 @@ rectangle that encompass all the features contained in this object. The
 
 <p>The plot above shows that the full Lake Erie extent (plotted in green) is much larger
 than the resulting cropped raster. Our new cropped Lake Erie now has the same extent
-as the <code class="highlighter-rouge">erie_outline</code> object that was used as a crop extent (blue border
+as the <code class="language-plaintext highlighter-rouge">erie_outline</code> object that was used as a crop extent (blue border
 below).</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
@@ -369,28 +374,28 @@ below).</p>
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">st_bbox</span><span class="p">(</span><span class="n">erie_bathy</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   xmin    ymin    xmax    ymax 
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   xmin    ymin    xmax    ymax 
  245701 4536578  754369 4767088 
 </code></pre></div></div>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">st_bbox</span><span class="p">(</span><span class="n">erie_bathy_Cropped</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   xmin    ymin    xmax    ymax 
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   xmin    ymin    xmax    ymax 
  285721 4580238  682057 4753028 
 </code></pre></div></div>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">st_bbox</span><span class="p">(</span><span class="n">erie_outline</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     xmin      ymin      xmax      ymax 
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     xmin      ymin      xmax      ymax 
  285728.3 4580281.1  682178.4 4752964.4 
 </code></pre></div></div>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">st_bbox</span><span class="p">(</span><span class="n">fish_locations</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     xmin      ymin      xmax      ymax 
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     xmin      ymin      xmax      ymax 
  319537.0 4609584.5  439213.4 4679545.8 
 </code></pre></div></div>
 
@@ -426,16 +431,16 @@ Bathymetry information.</p>
 <h2 id="define-an-extent">Define an Extent</h2>
 
 <p>So far, we have used a shapefile to crop the extent of a raster dataset.
-Alternatively, we can also the <code class="highlighter-rouge">extent()</code> function to define an extent to be
+Alternatively, we can also the <code class="language-plaintext highlighter-rouge">extent()</code> function to define an extent to be
 used as a cropping boundary. This creates a new object of class extent. Here we
-will provide the <code class="highlighter-rouge">extent()</code> function our xmin, xmax, ymin, and ymax (in that
+will provide the <code class="language-plaintext highlighter-rouge">extent()</code> function our xmin, xmax, ymin, and ymax (in that
 order).</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">new_extent</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">extent</span><span class="p">(</span><span class="m">285729</span><span class="p">,</span><span class="w"> </span><span class="m">385729</span><span class="p">,</span><span class="w"> </span><span class="m">4580282</span><span class="p">,</span><span class="w"> </span><span class="m">4752964</span><span class="p">)</span><span class="w">
 </span><span class="nf">class</span><span class="p">(</span><span class="n">new_extent</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] "Extent"
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] "Extent"
 attr(,"package")
 [1] "raster"
 </code></pre></div></div>
@@ -444,17 +449,17 @@ attr(,"package")
   <h2 id="data-tip">Data Tip</h2>
 
   <p>The extent can be created from a numeric vector (as shown above), a matrix, or
-a list. For more details see the <code class="highlighter-rouge">extent()</code> function help file
-(<code class="highlighter-rouge">?raster::extent</code>).</p>
+a list. For more details see the <code class="language-plaintext highlighter-rouge">extent()</code> function help file
+(<code class="language-plaintext highlighter-rouge">?raster::extent</code>).</p>
 </blockquote>
 
-<p>Once we have defined our new extent, we can use the <code class="highlighter-rouge">crop()</code> function to crop
+<p>Once we have defined our new extent, we can use the <code class="language-plaintext highlighter-rouge">crop()</code> function to crop
 our raster to this extent object.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">erie_bathy_manual_cropped</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">crop</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">erie_bathy</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">new_extent</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<p>To plot this data using <code class="highlighter-rouge">ggplot()</code> we need to convert it to a dataframe.</p>
+<p>To plot this data using <code class="language-plaintext highlighter-rouge">ggplot()</code> we need to convert it to a dataframe.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">erie_bathy_manual_cropped_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as.data.frame</span><span class="p">(</span><span class="n">erie_bathy_manual_cropped</span><span class="p">,</span><span class="w"> 
                                                 </span><span class="n">xy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
@@ -479,7 +484,7 @@ for example, our fish tracking locations that we are sampling. We can extract al
 
 <p><img src="../images//BufferSquare.png" alt="Extract raster information using a polygon boundary. From https://www.neonscience.org/sites/default/files/images/spatialData/BufferSquare.png" /></p>
 
-<p>To do this in R, we use the <code class="highlighter-rouge">extract()</code> function. The <code class="highlighter-rouge">extract()</code> function
+<p>To do this in R, we use the <code class="language-plaintext highlighter-rouge">extract()</code> function. The <code class="language-plaintext highlighter-rouge">extract()</code> function
 requires:</p>
 
 <ul>
@@ -487,7 +492,7 @@ requires:</p>
   <li>The vector layer containing the polygons that we wish to use as a boundary or
 boundaries,</li>
   <li>we can tell it to store the output values in a data frame using
-<code class="highlighter-rouge">df = TRUE</code>. (This is optional, the default is to return a list, NOT a data frame.) .</li>
+<code class="language-plaintext highlighter-rouge">df = TRUE</code>. (This is optional, the default is to return a list, NOT a data frame.) .</li>
 </ul>
 
 <p>We will begin by extracting all bathymetry pixel values for our fish tracking locations.</p>
@@ -499,19 +504,19 @@ boundaries,</li>
 </span><span class="n">str</span><span class="p">(</span><span class="n">fish_tracks_bathy</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>'data.frame':	1366 obs. of  2 variables:
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>'data.frame':	1366 obs. of  2 variables:
  $ ID        : num  1 2 3 4 5 6 7 8 9 10 ...
  $ erie_bathy: num  -5.84 -4.42 -5.84 -4.83 -5.84 ...
 </code></pre></div></div>
 
-<p>When we use the <code class="highlighter-rouge">extract()</code> function, R extracts the value for each pixel located
+<p>When we use the <code class="language-plaintext highlighter-rouge">extract()</code> function, R extracts the value for each pixel located
 within the boundary of the polygon being used to perform the extraction - in
-this case the <code class="highlighter-rouge">fish_locations</code> object (a point layer). Here, the
+this case the <code class="language-plaintext highlighter-rouge">fish_locations</code> object (a point layer). Here, the
 function extracted values from 1,366 pixels.</p>
 
 <p>We can create a histogram of depth values within the boundary to better
 understand the structure or depth distribution at our fish tracking locations. We 
-will use the column <code class="highlighter-rouge">erie_bathy</code> from our data frame as our x values, as this column
+will use the column <code class="language-plaintext highlighter-rouge">erie_bathy</code> from our data frame as our x values, as this column
 represents the depths for each pixel.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> 
@@ -521,28 +526,28 @@ represents the depths for each pixel.</p>
   </span><span class="n">ylab</span><span class="p">(</span><span class="s2">"Frequency of Pixels"</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 </code></pre></div></div>
 
 <p><img src="../fig/rmd-05-view-extract-histogram-1.png" title="plot of chunk view-extract-histogram" alt="plot of chunk view-extract-histogram" width="612" style="display: block; margin: auto;" /></p>
 
 <p>We can also use the
-<code class="highlighter-rouge">summary()</code> function to view descriptive statistics including min, max, and mean
+<code class="language-plaintext highlighter-rouge">summary()</code> function to view descriptive statistics including min, max, and mean
 height values. These values help us better the depth at our fishing tracking locations.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">summary</span><span class="p">(</span><span class="n">fish_tracks_bathy</span><span class="o">$</span><span class="n">erie_bathy</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 -21.508 -13.786  -9.509 -10.177  -7.281   2.322 
 </code></pre></div></div>
 
 <h2 id="summarize-extracted-raster-values">Summarize Extracted Raster Values</h2>
 
 <p>We often want to extract summary values from a raster. We can tell R the type
-of summary statistic we are interested in using the <code class="highlighter-rouge">fun =</code> argument. Let’s extract
+of summary statistic we are interested in using the <code class="language-plaintext highlighter-rouge">fun =</code> argument. Let’s extract
 a mean height value for our AOI. Because we are extracting only a single number, 
-we will not use the <code class="highlighter-rouge">df = TRUE</code> argument.</p>
+we will not use the <code class="language-plaintext highlighter-rouge">df = TRUE</code> argument.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mean_erie_bathy_AOI</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">raster</span><span class="o">::</span><span class="n">extract</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">erie_bathy</span><span class="p">,</span><span class="w">
                               </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">as</span><span class="p">(</span><span class="n">erie_outline</span><span class="p">,</span><span class="w"> </span><span class="s2">"Spatial"</span><span class="p">),</span><span class="w">
@@ -551,7 +556,7 @@ we will not use the <code class="highlighter-rouge">df = TRUE</code> argument.</
 </span><span class="n">mean_erie_bathy_AOI</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>          [,1]
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>          [,1]
 [1,] -17.93646
 </code></pre></div></div>
 
@@ -560,9 +565,9 @@ we will not use the <code class="highlighter-rouge">df = TRUE</code> argument.</
 <h2 id="extract-data-using-xy-locations">Extract Data using x,y Locations</h2>
 
 <p>We can also extract pixel values from a raster by defining a buffer or area
-surrounding individual point locations using the <code class="highlighter-rouge">extract()</code> function. To do this
-we define the summary argument (<code class="highlighter-rouge">fun = mean</code>) and the buffer distance 
-(<code class="highlighter-rouge">buffer = 20</code>) which represents the radius of a circular region around each point.
+surrounding individual point locations using the <code class="language-plaintext highlighter-rouge">extract()</code> function. To do this
+we define the summary argument (<code class="language-plaintext highlighter-rouge">fun = mean</code>) and the buffer distance 
+(<code class="language-plaintext highlighter-rouge">buffer = 20</code>) which represents the radius of a circular region around each point.
 By default, the units of the buffer are the same units as the data’s CRS. All pixels
 that are touched by the buffer region are included in the extract.</p>
 
@@ -571,8 +576,8 @@ that are touched by the buffer region are included in the extract.</p>
 <p>Source: National Ecological Observatory Network (NEON).</p>
 
 <p>Let’s put this into practice by figuring out the mean depth in the
-20m around the first fish tracking location (<code class="highlighter-rouge">fish_locations</code>). Because we are extracting
-from a single location, we will not use the <code class="highlighter-rouge">df = TRUE</code> argument.</p>
+20m around the first fish tracking location (<code class="language-plaintext highlighter-rouge">fish_locations</code>). Because we are extracting
+from a single location, we will not use the <code class="language-plaintext highlighter-rouge">df = TRUE</code> argument.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mean_erie_fish</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">extract</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">erie_bathy</span><span class="p">,</span><span class="w">
                            </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">as</span><span class="p">(</span><span class="n">fish_locations</span><span class="p">[</span><span class="m">1</span><span class="p">,],</span><span class="w"> </span><span class="s2">"Spatial"</span><span class="p">),</span><span class="w">
@@ -581,15 +586,15 @@ from a single location, we will not use the <code class="highlighter-rouge">df =
 </span><span class="n">mean_erie_fish</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] -5.841959
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] -5.841959
 </code></pre></div></div>
 
 <blockquote class="challenge">
   <h2 id="challenge-extract-buffered-bathymetry-values-for-fish-tracking-location">Challenge: Extract buffered bathymetry values for fish tracking location</h2>
 
-  <p>1) Use the fish tracking object (<code class="highlighter-rouge">fish_locations</code>) to extract an average depth for the
+  <p>1) Use the fish tracking object (<code class="language-plaintext highlighter-rouge">fish_locations</code>) to extract an average depth for the
 area within 20m of each point location. Because there are 
-multiple fish tracking locations, there will be multiple averages returned, so the <code class="highlighter-rouge">df = TRUE</code> 
+multiple fish tracking locations, there will be multiple averages returned, so the <code class="language-plaintext highlighter-rouge">df = TRUE</code> 
 argument should be used.</p>
 
   <p>2) Create a plot showing the mean depth of each area.</p>
@@ -623,13 +628,13 @@ argument should be used.</p>
   <h2>Key Points</h2>
   <ul>
     
-    <li><p>Use the <code class="highlighter-rouge">crop()</code> function to crop a raster object.</p>
+    <li><p>Use the <code class="language-plaintext highlighter-rouge">crop()</code> function to crop a raster object.</p>
 </li>
     
-    <li><p>Use the <code class="highlighter-rouge">extract()</code> function to extract pixels from a raster object that fall within a particular extent boundary.</p>
+    <li><p>Use the <code class="language-plaintext highlighter-rouge">extract()</code> function to extract pixels from a raster object that fall within a particular extent boundary.</p>
 </li>
     
-    <li><p>Use the <code class="highlighter-rouge">extent()</code> function to define an extent.</p>
+    <li><p>Use the <code class="language-plaintext highlighter-rouge">extent()</code> function to define an extent.</p>
 </li>
     
   </ul>
@@ -685,7 +690,7 @@ argument should be used.</p>
   <div class="row">
     <div class="col-md-6 copyright" align="left">
 	
-	Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a> 2018–2020
+	Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a> 2018–2021
 	by <a href="https://carpentries.org/">The Carpentries</a>
         <br>
         Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a> 2016–2018

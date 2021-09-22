@@ -61,13 +61,14 @@ erie_zones <- st_read("data/erie_zones.shp")
 
 
 ~~~
-Reading layer `erie_zones' from data source `/home/jose/Documents/Science/Workshops/2020-02_glatos/glatos-spatial_workshop_materials/_episodes_rmd/data/erie_zones.shp' using driver `ESRI Shapefile'
+Reading layer `erie_zones' from data source 
+  `/home/jemma/Documents/Science/Workshops/2021-09_gleon-spatial/gleon-spatial_workshop_materials/_episodes_rmd/data/erie_zones.shp' 
+  using driver `ESRI Shapefile'
 Simple feature collection with 11 features and 8 fields
-geometry type:  POLYGON
-dimension:      XY
-bbox:           xmin: 292076.1 ymin: 4582052 xmax: 675959 ymax: 4751574
-epsg (SRID):    NA
-proj4string:    +proj=utm +zone=17 +ellps=GRS80 +units=m +no_defs
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 292076.1 ymin: 4582052 xmax: 675959 ymax: 4751574
+CRS:           unknown
 ~~~
 {: .output}
 
@@ -83,11 +84,10 @@ erie_zones
 
 ~~~
 Simple feature collection with 11 features and 8 fields
-geometry type:  POLYGON
-dimension:      XY
-bbox:           xmin: 292076.1 ymin: 4582052 xmax: 675959 ymax: 4751574
-epsg (SRID):    NA
-proj4string:    +proj=utm +zone=17 +ellps=GRS80 +units=m +no_defs
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 292076.1 ymin: 4582052 xmax: 675959 ymax: 4751574
+CRS:           unknown
 First 10 features:
    OBJECTID  NAME     SQ_KM  HECTARES      ACRES MGMTUNIT Shape_Leng Shape_Area
 1         1 Mich.  323.4672  32346.73   79928.76      MU1   1.996955 0.03514546
@@ -159,11 +159,10 @@ head(erie_zones)
 
 ~~~
 Simple feature collection with 6 features and 8 fields
-geometry type:  POLYGON
-dimension:      XY
-bbox:           xmin: 292076.1 ymin: 4582052 xmax: 670839.7 ymax: 4751574
-epsg (SRID):    NA
-proj4string:    +proj=utm +zone=17 +ellps=GRS80 +units=m +no_defs
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 292076.1 ymin: 4582052 xmax: 670839.7 ymax: 4751574
+CRS:           unknown
   OBJECTID  NAME     SQ_KM  HECTARES      ACRES MGMTUNIT Shape_Leng Shape_Area
 1        1 Mich.  323.4672  32346.73   79928.76      MU1   1.996955 0.03514546
 2        2  OE-5 1764.0675 176406.75  435901.07      MU5   2.665866 0.19481404
@@ -240,8 +239,7 @@ erie_zones$MGMTUNIT
 
 
 ~~~
- [1] MU1 MU5 MU1 MU1 MU2 MU2 MU3 MU3 MU4 MU4 MU5
-Levels: MU1 MU2 MU3 MU4 MU5
+ [1] "MU1" "MU5" "MU1" "MU1" "MU2" "MU2" "MU3" "MU3" "MU4" "MU4" "MU5"
 ~~~
 {: .output}
 
@@ -259,7 +257,7 @@ levels(erie_zones$MGMTUNIT)
 
 
 ~~~
-[1] "MU1" "MU2" "MU3" "MU4" "MU5"
+NULL
 ~~~
 {: .output}
 
@@ -387,7 +385,7 @@ levels(erie_zones$MGMTUNIT)
 
 
 ~~~
-[1] "MU1" "MU2" "MU3" "MU4" "MU5"
+NULL
 ~~~
 {: .output}
 
@@ -473,7 +471,7 @@ ggplot() +
 > > 
 > > 
 > > ~~~
-> > [1] "MU1" "MU2" "MU3" "MU4" "MU5"
+> > NULL
 > > ~~~
 > > {: .output}
 > >
@@ -525,13 +523,14 @@ ggplot() +
 > > 
 > > 
 > > ~~~
-> > Reading layer `erie_contours' from data source `/home/jose/Documents/Science/Workshops/2020-02_glatos/glatos-spatial_workshop_materials/_episodes_rmd/data/erie_contours.shp' using driver `ESRI Shapefile'
+> > Reading layer `erie_contours' from data source 
+> >   `/home/jemma/Documents/Science/Workshops/2021-09_gleon-spatial/gleon-spatial_workshop_materials/_episodes_rmd/data/erie_contours.shp' 
+> >   using driver `ESRI Shapefile'
 > > Simple feature collection with 8764 features and 3 fields
-> > geometry type:  LINESTRING
-> > dimension:      XY
-> > bbox:           xmin: -83.57167 ymin: 41.36359 xmax: -78.7695 ymax: 42.9103
-> > epsg (SRID):    4326
-> > proj4string:    +proj=longlat +datum=WGS84 +no_defs
+> > Geometry type: LINESTRING
+> > Dimension:     XY
+> > Bounding box:  xmin: -83.57167 ymin: 41.36359 xmax: -78.7695 ymax: 42.9103
+> > Geodetic CRS:  GCS_unknown
 > > ~~~
 > > {: .output}
 > > 

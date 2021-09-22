@@ -22,6 +22,12 @@ source: Rmd
 
 
 
+~~~
+Warning in showSRID(SRS_string, format = "PROJ", multiline = "NO", prefer_proj
+= prefer_proj): Discarded datum Unknown_based_on_GRS80_ellipsoid in Proj4
+definition
+~~~
+{: .error}
 
 > ## Things You’ll Need To Complete This Episode
 >

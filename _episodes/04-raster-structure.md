@@ -79,6 +79,14 @@ GDALinfo("data/erie_bathy.tif")
 
 
 ~~~
+Warning in getProjectionRef(x, OVERRIDE_PROJ_DATUM_WITH_TOWGS84 = OVERRIDE_PROJ_DATUM_WITH_TOWGS84, : Discarded datum Unknown_based_on_GRS80_ellipsoid in Proj4 definition: +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs,
+ but +towgs84= values preserved
+~~~
+{: .error}
+
+
+
+~~~
 rows        623 
 columns     1843 
 bands       1 
@@ -114,6 +122,14 @@ erie_bathy_info <- capture.output(
 ~~~
 {: .language-r}
 
+
+
+~~~
+Warning in getProjectionRef(x, OVERRIDE_PROJ_DATUM_WITH_TOWGS84 = OVERRIDE_PROJ_DATUM_WITH_TOWGS84, : Discarded datum Unknown_based_on_GRS80_ellipsoid in Proj4 definition: +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs,
+ but +towgs84= values preserved
+~~~
+{: .error}
+
 Each line of text that was printed to the console is now stored as an element of
 the character vector `erie_bathy_info`. We will be exploring this data throughout this 
 episode. By the end of this episode, you will be able to explain and understand the output above.
@@ -136,7 +152,21 @@ First we will load our raster file into R and view the data structure.
 
 ~~~
 erie_bathy <- raster("data/erie_bathy.tif")
+~~~
+{: .language-r}
 
+
+
+~~~
+Warning in showSRID(SRS_string, format = "PROJ", multiline = "NO", prefer_proj
+= prefer_proj): Discarded datum Unknown_based_on_GRS80_ellipsoid in Proj4
+definition
+~~~
+{: .error}
+
+
+
+~~~
 erie_bathy
 ~~~
 {: .language-r}
@@ -148,8 +178,8 @@ class      : RasterLayer
 dimensions : 623, 1843, 1148189  (nrow, ncol, ncell)
 resolution : 276, 370  (x, y)
 extent     : 245701, 754369, 4536578, 4767088  (xmin, xmax, ymin, ymax)
-crs        : +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
-source     : /home/jose/Documents/Science/Workshops/2020-02_glatos/glatos-spatial_workshop_materials/_episodes_rmd/data/erie_bathy.tif 
+crs        : +proj=utm +zone=17 +ellps=GRS80 +units=m +no_defs 
+source     : erie_bathy.tif 
 names      : erie_bathy 
 values     : -62.47671, 598.1871  (min, max)
 ~~~
@@ -175,13 +205,13 @@ Warning in .local(object, ...): summary is an estimate based on a sample of 1e+0
 
 
 ~~~
-        erie_bathy
-Min.    -62.473782
-1st Qu.   1.575743
-Median   63.313280
-3rd Qu. 219.961578
-Max.    596.867676
-NA's      0.000000
+          erie_bathy
+Min.      -62.476707
+1st Qu.     1.498626
+Median     63.258566
+3rd Qu.   220.382710
+Max.      584.065308
+NA's    64379.000000
 ~~~
 {: .output}
 
@@ -300,8 +330,7 @@ crs(erie_bathy)
 
 ~~~
 CRS arguments:
- +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m
-+no_defs 
+ +proj=utm +zone=17 +ellps=GRS80 +units=m +no_defs 
 ~~~
 {: .output}
 
@@ -469,6 +498,14 @@ of `NA` will be ignored by R as demonstrated above.
 > > GDALinfo("data//erie_bathy.tif")
 > > ~~~
 > > {: .language-r}
+> > 
+> > 
+> > 
+> > ~~~
+> > Warning in getProjectionRef(x, OVERRIDE_PROJ_DATUM_WITH_TOWGS84 = OVERRIDE_PROJ_DATUM_WITH_TOWGS84, : Discarded datum Unknown_based_on_GRS80_ellipsoid in Proj4 definition: +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs,
+> >  but +towgs84= values preserved
+> > ~~~
+> > {: .error}
 > > 
 > > 
 > > 

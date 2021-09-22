@@ -19,7 +19,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="last-modified" content="2020-02-18 18:18:21 -0500">
+    <meta http-equiv="last-modified" content="2021-09-22 15:29:24 -0600">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- meta "search-domain" used for google site search function google_search() -->
     <meta name="search-domain" value="">
@@ -279,7 +279,7 @@ by specific attribute values. Finally, we will learn how to plot a shapefile
 according to a set of attribute values.</p>
 
 <h2 id="load-the-data">Load the Data</h2>
-<p>We will continue using the <code class="highlighter-rouge">sf</code>, <code class="highlighter-rouge">raster</code> and <code class="highlighter-rouge">ggplot2</code> packages in this episode. Make sure that you have these packages loaded. We will
+<p>We will continue using the <code class="language-plaintext highlighter-rouge">sf</code>, <code class="language-plaintext highlighter-rouge">raster</code> and <code class="language-plaintext highlighter-rouge">ggplot2</code> packages in this episode. Make sure that you have these packages loaded. We will
 continue to work with the three shapefiles that we loaded in the
 <a href="/01-vector-open-shapefile-in-r/">Open and Plot Shapefiles in R</a> episode.</p>
 
@@ -290,38 +290,38 @@ continue to work with the three shapefiles that we loaded in the
 we can view metadata associated with an R object using:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">st_geometry_type()</code> - The type of vector data stored in the object.</li>
-  <li><code class="highlighter-rouge">nrow()</code> - The number of features in the object</li>
-  <li><code class="highlighter-rouge">st_bbox()</code> - The spatial extent (geographic area covered by) 
+  <li><code class="language-plaintext highlighter-rouge">st_geometry_type()</code> - The type of vector data stored in the object.</li>
+  <li><code class="language-plaintext highlighter-rouge">nrow()</code> - The number of features in the object</li>
+  <li><code class="language-plaintext highlighter-rouge">st_bbox()</code> - The spatial extent (geographic area covered by) 
 of the object.</li>
-  <li><code class="highlighter-rouge">st_crs()</code> - The CRS (spatial projection) of the data.</li>
+  <li><code class="language-plaintext highlighter-rouge">st_crs()</code> - The CRS (spatial projection) of the data.</li>
 </ul>
 
-<p>We started to explore our <code class="highlighter-rouge">erie_outline</code> object in the previous episode. Here, we will look at a more complex object representing Lake Erie management zones.</p>
+<p>We started to explore our <code class="language-plaintext highlighter-rouge">erie_outline</code> object in the previous episode. Here, we will look at a more complex object representing Lake Erie management zones.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">erie_zones</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">st_read</span><span class="p">(</span><span class="s2">"data/erie_zones.shp"</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Reading layer `erie_zones' from data source `/home/jose/Documents/Science/Workshops/2020-02_glatos/glatos-spatial_workshop_materials/_episodes_rmd/data/erie_zones.shp' using driver `ESRI Shapefile'
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Reading layer `erie_zones' from data source 
+  `/home/jemma/Documents/Science/Workshops/2021-09_gleon-spatial/gleon-spatial_workshop_materials/_episodes_rmd/data/erie_zones.shp' 
+  using driver `ESRI Shapefile'
 Simple feature collection with 11 features and 8 fields
-geometry type:  POLYGON
-dimension:      XY
-bbox:           xmin: 292076.1 ymin: 4582052 xmax: 675959 ymax: 4751574
-epsg (SRID):    NA
-proj4string:    +proj=utm +zone=17 +ellps=GRS80 +units=m +no_defs
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 292076.1 ymin: 4582052 xmax: 675959 ymax: 4751574
+CRS:           unknown
 </code></pre></div></div>
 
-<p>To see a summary of all of the metadata associated with our <code class="highlighter-rouge">erie_zones</code> object, we can view the object with <code class="highlighter-rouge">View(erie_zones)</code> or print a summary of the object itself to the console.</p>
+<p>To see a summary of all of the metadata associated with our <code class="language-plaintext highlighter-rouge">erie_zones</code> object, we can view the object with <code class="language-plaintext highlighter-rouge">View(erie_zones)</code> or print a summary of the object itself to the console.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">erie_zones</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Simple feature collection with 11 features and 8 fields
-geometry type:  POLYGON
-dimension:      XY
-bbox:           xmin: 292076.1 ymin: 4582052 xmax: 675959 ymax: 4751574
-epsg (SRID):    NA
-proj4string:    +proj=utm +zone=17 +ellps=GRS80 +units=m +no_defs
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Simple feature collection with 11 features and 8 fields
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 292076.1 ymin: 4582052 xmax: 675959 ymax: 4751574
+CRS:           unknown
 First 10 features:
    OBJECTID  NAME     SQ_KM  HECTARES      ACRES MGMTUNIT Shape_Leng Shape_Area
 1         1 Mich.  323.4672  32346.73   79928.76      MU1   1.996955 0.03514546
@@ -347,36 +347,35 @@ First 10 features:
 10 POLYGON ((539843.7 4647691,...
 </code></pre></div></div>
 
-<p>We can use the <code class="highlighter-rouge">ncol</code> function to count the number of attributes associated with a spatial object too. Note that the geometry is just another column and counts towards the total.</p>
+<p>We can use the <code class="language-plaintext highlighter-rouge">ncol</code> function to count the number of attributes associated with a spatial object too. Note that the geometry is just another column and counts towards the total.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ncol</span><span class="p">(</span><span class="n">erie_zones</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] 9
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] 9
 </code></pre></div></div>
 
 <p>We can view the individual name of each attribute using the
-<code class="highlighter-rouge">names()</code> function in R:</p>
+<code class="language-plaintext highlighter-rouge">names()</code> function in R:</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">names</span><span class="p">(</span><span class="n">erie_zones</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] "OBJECTID"   "NAME"       "SQ_KM"      "HECTARES"   "ACRES"     
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] "OBJECTID"   "NAME"       "SQ_KM"      "HECTARES"   "ACRES"     
 [6] "MGMTUNIT"   "Shape_Leng" "Shape_Area" "geometry"  
 </code></pre></div></div>
 
 <p>We could also view just the first 6 rows
-of attribute values using the <code class="highlighter-rouge">head()</code> function to get a preview of the data:</p>
+of attribute values using the <code class="language-plaintext highlighter-rouge">head()</code> function to get a preview of the data:</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">head</span><span class="p">(</span><span class="n">erie_zones</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Simple feature collection with 6 features and 8 fields
-geometry type:  POLYGON
-dimension:      XY
-bbox:           xmin: 292076.1 ymin: 4582052 xmax: 670839.7 ymax: 4751574
-epsg (SRID):    NA
-proj4string:    +proj=utm +zone=17 +ellps=GRS80 +units=m +no_defs
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Simple feature collection with 6 features and 8 fields
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 292076.1 ymin: 4582052 xmax: 670839.7 ymax: 4751574
+CRS:           unknown
   OBJECTID  NAME     SQ_KM  HECTARES      ACRES MGMTUNIT Shape_Leng Shape_Area
 1        1 Mich.  323.4672  32346.73   79928.76      MU1   1.996955 0.03514546
 2        2  OE-5 1764.0675 176406.75  435901.07      MU5   2.665866 0.19481404
@@ -396,12 +395,12 @@ proj4string:    +proj=utm +zone=17 +ellps=GRS80 +units=m +no_defs
 <blockquote class="challenge">
   <h2 id="challenge-attributes-for-different-spatial-classes">Challenge: Attributes for Different Spatial Classes</h2>
 
-  <p>Explore the attributes associated with the <code class="highlighter-rouge">erie_zones</code> spatial object.</p>
+  <p>Explore the attributes associated with the <code class="language-plaintext highlighter-rouge">erie_zones</code> spatial object.</p>
 
   <ol>
     <li>How many attributes does it have?</li>
     <li>
-      <p>Which of the following is NOT an attribute of the <code class="highlighter-rouge">erie_outline</code> data object?</p>
+      <p>Which of the following is NOT an attribute of the <code class="language-plaintext highlighter-rouge">erie_outline</code> data object?</p>
 
       <p>A) NAME      B) MGMTUNIT     C) MGMTZONE</p>
     </li>
@@ -409,20 +408,20 @@ proj4string:    +proj=utm +zone=17 +ellps=GRS80 +units=m +no_defs
 
   <blockquote class="solution">
     <h2 id="answers">Answers</h2>
-    <p>1) To find the number of attributes, we use the <code class="highlighter-rouge">ncol()</code> function:</p>
+    <p>1) To find the number of attributes, we use the <code class="language-plaintext highlighter-rouge">ncol()</code> function:</p>
 
     <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ncol</span><span class="p">(</span><span class="n">erie_zones</span><span class="p">)</span><span class="w">
 </span></code></pre></div>    </div>
 
-    <div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] 9
+    <div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] 9
 </code></pre></div>    </div>
     <p>2) To see a list of all of the attributes, we can use the
-<code class="highlighter-rouge">names()</code> function:</p>
+<code class="language-plaintext highlighter-rouge">names()</code> function:</p>
 
     <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">names</span><span class="p">(</span><span class="n">erie_zones</span><span class="p">)</span><span class="w">
 </span></code></pre></div>    </div>
 
-    <div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] "OBJECTID"   "NAME"       "SQ_KM"      "HECTARES"   "ACRES"     
+    <div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] "OBJECTID"   "NAME"       "SQ_KM"      "HECTARES"   "ACRES"     
 [6] "MGMTUNIT"   "Shape_Leng" "Shape_Area" "geometry"  
 </code></pre></div>    </div>
     <p>“MGMTZONE” is not an attribute of this object.</p>
@@ -432,45 +431,44 @@ proj4string:    +proj=utm +zone=17 +ellps=GRS80 +units=m +no_defs
 <h2 id="explore-values-within-one-attribute">Explore Values within One Attribute</h2>
 <p>We can explore individual values stored within a particular attribute.
 Comparing attributes to a spreadsheet or a data frame, this is similar
-to exploring values in a column. For spatial objects, we can use the syntax: <code class="highlighter-rouge">objectName$attributeName</code>.</p>
+to exploring values in a column. For spatial objects, we can use the syntax: <code class="language-plaintext highlighter-rouge">objectName$attributeName</code>.</p>
 
-<p>We can see the contents of the <code class="highlighter-rouge">MGMTUNIT</code> field of our vector object:</p>
+<p>We can see the contents of the <code class="language-plaintext highlighter-rouge">MGMTUNIT</code> field of our vector object:</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">erie_zones</span><span class="o">$</span><span class="n">MGMTUNIT</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code> [1] MU1 MU5 MU1 MU1 MU2 MU2 MU3 MU3 MU4 MU4 MU5
-Levels: MU1 MU2 MU3 MU4 MU5
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code> [1] "MU1" "MU5" "MU1" "MU1" "MU2" "MU2" "MU3" "MU3" "MU4" "MU4" "MU5"
 </code></pre></div></div>
 
-<p>To see only unique values within the <code class="highlighter-rouge">MGMTUNIT</code> field, we can use the
-<code class="highlighter-rouge">levels()</code> function for extracting the possible values of a
+<p>To see only unique values within the <code class="language-plaintext highlighter-rouge">MGMTUNIT</code> field, we can use the
+<code class="language-plaintext highlighter-rouge">levels()</code> function for extracting the possible values of a
 categorical variable. The special term for categorical variables
 within R is factor.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">levels</span><span class="p">(</span><span class="n">erie_zones</span><span class="o">$</span><span class="n">MGMTUNIT</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] "MU1" "MU2" "MU3" "MU4" "MU5"
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>NULL
 </code></pre></div></div>
 
 <h3 id="subset-shapefiles">Subset Shapefiles</h3>
-<p>We can use the <code class="highlighter-rouge">filter()</code> function from <code class="highlighter-rouge">dplyr</code> to select a subset of features
+<p>We can use the <code class="language-plaintext highlighter-rouge">filter()</code> function from <code class="language-plaintext highlighter-rouge">dplyr</code> to select a subset of features
 from a spatial object in R, just like with data frames.</p>
 
-<p>For example, we might be interested only in features that are of <code class="highlighter-rouge">MGMTUNIT</code> “MU5”. Once we subset out this data, we can use it as input to other code so  that code only operates on the MU5 management zones.</p>
+<p>For example, we might be interested only in features that are of <code class="language-plaintext highlighter-rouge">MGMTUNIT</code> “MU5”. Once we subset out this data, we can use it as input to other code so  that code only operates on the MU5 management zones.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">zone_5</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">erie_zones</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
   </span><span class="n">dplyr</span><span class="o">::</span><span class="n">filter</span><span class="p">(</span><span class="n">MGMTUNIT</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"MU5"</span><span class="p">)</span><span class="w">
 </span><span class="n">nrow</span><span class="p">(</span><span class="n">zone_5</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] 2
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] 2
 </code></pre></div></div>
 
-<p>Our subsetting operation reduces the <code class="highlighter-rouge">features</code> count to 2. This means
+<p>Our subsetting operation reduces the <code class="language-plaintext highlighter-rouge">features</code> count to 2. This means
 that only two feature polygons in our spatial object have the attribute
-<code class="highlighter-rouge">MGMTUNIT == MU5</code>. We can plot only these polygons:</p>
+<code class="language-plaintext highlighter-rouge">MGMTUNIT == MU5</code>. We can plot only these polygons:</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> 
   </span><span class="n">geom_sf</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zone_5</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
@@ -483,10 +481,10 @@ that only two feature polygons in our spatial object have the attribute
 <p>There are two features in our subset. Why does the plot look like
 there is only one feature? Let’s adjust the colors used in our plot. If we have
 2 features in our vector object, we can plot each using a unique color by
-assigning a column name to the color aesthetic (<code class="highlighter-rouge">color =</code>). We use the syntax
-<code class="highlighter-rouge">aes(color = )</code> to do this. We can also alter the default line thickness by
-using the <code class="highlighter-rouge">size =</code> parameter, as the default value of 0.5 can be hard to see.
-Note that size is placed outside of the <code class="highlighter-rouge">aes()</code> function, as we are not
+assigning a column name to the color aesthetic (<code class="language-plaintext highlighter-rouge">color =</code>). We use the syntax
+<code class="language-plaintext highlighter-rouge">aes(color = )</code> to do this. We can also alter the default line thickness by
+using the <code class="language-plaintext highlighter-rouge">size =</code> parameter, as the default value of 0.5 can be hard to see.
+Note that size is placed outside of the <code class="language-plaintext highlighter-rouge">aes()</code> function, as we are not
 connecting line thickness to a data variable.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> 
@@ -503,7 +501,7 @@ connecting line thickness to a data variable.</p>
 <blockquote class="challenge">
   <h2 id="challenge-subset-spatial-objects-part-1">Challenge: Subset Spatial Objects Part 1</h2>
 
-  <p>Subset out all <code class="highlighter-rouge">erie_zones</code> that have an area greater than 3000 square kilometers and plot it.</p>
+  <p>Subset out all <code class="language-plaintext highlighter-rouge">erie_zones</code> that have an area greater than 3000 square kilometers and plot it.</p>
 
   <blockquote class="solution">
     <h2 id="answers-1">Answers</h2>
@@ -518,7 +516,7 @@ connecting line thickness to a data variable.</p>
     <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nrow</span><span class="p">(</span><span class="n">erie_zones_big</span><span class="p">)</span><span class="w">
 </span></code></pre></div>    </div>
 
-    <div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] 3
+    <div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] 3
 </code></pre></div>    </div>
     <p>Now let’s plot that data:</p>
 
@@ -534,18 +532,18 @@ connecting line thickness to a data variable.</p>
 
 <h2 id="customize-plots">Customize Plots</h2>
 
-<p>In the examples above, <code class="highlighter-rouge">ggplot()</code> automatically selected colors for
+<p>In the examples above, <code class="language-plaintext highlighter-rouge">ggplot()</code> automatically selected colors for
 each line based on a default color order. If we don’t like those
 default colors, we can create a vector of colors - one for each
 feature. To create this vector we can use the following syntax:</p>
 
-<p><code class="highlighter-rouge">c("color_one", "color_two", "color_three")[object$factor]</code></p>
+<p><code class="language-plaintext highlighter-rouge">c("color_one", "color_two", "color_three")[object$factor]</code></p>
 
 <p>Note in the above example we have</p>
 
 <ol>
   <li>a vector of colors - one for each factor value (unique attribute value)</li>
-  <li>the attribute itself (<code class="highlighter-rouge">[object$factor]</code>) of class factor.</li>
+  <li>the attribute itself (<code class="language-plaintext highlighter-rouge">[object$factor]</code>) of class factor.</li>
 </ol>
 
 <p>First we will check how many unique levels our factor has:</p>
@@ -553,7 +551,7 @@ feature. To create this vector we can use the following syntax:</p>
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">levels</span><span class="p">(</span><span class="n">erie_zones</span><span class="o">$</span><span class="n">MGMTUNIT</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] "MU1" "MU2" "MU3" "MU4" "MU5"
+<div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>NULL
 </code></pre></div></div>
 
 <p>Then we can create a pallet of four colors, one for each
@@ -562,7 +560,7 @@ feature in our vector object.</p>
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">zone_colors</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"blue"</span><span class="p">,</span><span class="w"> </span><span class="s2">"green"</span><span class="p">,</span><span class="w"> </span><span class="s2">"navy"</span><span class="p">,</span><span class="w"> </span><span class="s2">"purple"</span><span class="p">,</span><span class="w"> </span><span class="s2">"orange"</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<p>We can tell <code class="highlighter-rouge">ggplot</code> to use these colors when we plot the data.</p>
+<p>We can tell <code class="language-plaintext highlighter-rouge">ggplot</code> to use these colors when we plot the data.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
   </span><span class="n">geom_sf</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">erie_zones</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MGMTUNIT</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> 
@@ -578,7 +576,7 @@ feature in our vector object.</p>
 <p>We adjusted line width universally earlier. If we want a unique line width for each factor level or attribute category
 in our spatial object, we can use the same syntax that we used for colors, above.</p>
 
-<p>We already know that we have five different <code class="highlighter-rouge">MGMTUNIT</code> levels in the erie_zones object, so we will set five different line widths.</p>
+<p>We already know that we have five different <code class="language-plaintext highlighter-rouge">MGMTUNIT</code> levels in the erie_zones object, so we will set five different line widths.</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">line_widths</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
@@ -624,10 +622,10 @@ what order the road types are in:</p>
     <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">levels</span><span class="p">(</span><span class="n">erie_zones</span><span class="o">$</span><span class="n">MGMTUNIT</span><span class="p">)</span><span class="w">
 </span></code></pre></div>    </div>
 
-    <div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] "MU1" "MU2" "MU3" "MU4" "MU5"
+    <div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>NULL
 </code></pre></div>    </div>
 
-    <p>We then can create our <code class="highlighter-rouge">line_width</code> vector setting each of the
+    <p>We then can create our <code class="language-plaintext highlighter-rouge">line_width</code> vector setting each of the
 levels to the desired thickness.</p>
 
     <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">line_width</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w">
@@ -649,17 +647,17 @@ levels to the desired thickness.</p>
 <blockquote class="callout">
   <h2 id="data-tip">Data Tip</h2>
   <p>You can modify the default R color palette
-using the palette method. For example <code class="highlighter-rouge">palette(rainbow(6))</code> or
-<code class="highlighter-rouge">palette(terrain.colors(6))</code>. You can reset the palette colors using
-<code class="highlighter-rouge">palette("default")</code>!</p>
+using the palette method. For example <code class="language-plaintext highlighter-rouge">palette(rainbow(6))</code> or
+<code class="language-plaintext highlighter-rouge">palette(terrain.colors(6))</code>. You can reset the palette colors using
+<code class="language-plaintext highlighter-rouge">palette("default")</code>!</p>
 </blockquote>
 
 <blockquote class="challenge">
   <h2 id="challenge-plot-lines-by-attribute">Challenge: Plot Lines by Attribute</h2>
 
   <ol>
-    <li>Create a map of Lake Erie bathymetry contours using the data located in your downloaded data folder: <code class="highlighter-rouge">erie_contours.shp</code>.
-Apply a color to contour using its <code class="highlighter-rouge">depth_m</code> value. Add a legend.</li>
+    <li>Create a map of Lake Erie bathymetry contours using the data located in your downloaded data folder: <code class="language-plaintext highlighter-rouge">erie_contours.shp</code>.
+Apply a color to contour using its <code class="language-plaintext highlighter-rouge">depth_m</code> value. Add a legend.</li>
   </ol>
 
   <blockquote class="solution">
@@ -669,13 +667,14 @@ Apply a color to contour using its <code class="highlighter-rouge">depth_m</code
     <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">erie_contours</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">st_read</span><span class="p">(</span><span class="s2">"data/erie_contours.shp"</span><span class="p">)</span><span class="w"> 
 </span></code></pre></div>    </div>
 
-    <div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Reading layer `erie_contours' from data source `/home/jose/Documents/Science/Workshops/2020-02_glatos/glatos-spatial_workshop_materials/_episodes_rmd/data/erie_contours.shp' using driver `ESRI Shapefile'
+    <div class="language-plaintext output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Reading layer `erie_contours' from data source 
+  `/home/jemma/Documents/Science/Workshops/2021-09_gleon-spatial/gleon-spatial_workshop_materials/_episodes_rmd/data/erie_contours.shp' 
+  using driver `ESRI Shapefile'
 Simple feature collection with 8764 features and 3 fields
-geometry type:  LINESTRING
-dimension:      XY
-bbox:           xmin: -83.57167 ymin: 41.36359 xmax: -78.7695 ymax: 42.9103
-epsg (SRID):    4326
-proj4string:    +proj=longlat +datum=WGS84 +no_defs
+Geometry type: LINESTRING
+Dimension:     XY
+Bounding box:  xmin: -83.57167 ymin: 41.36359 xmax: -78.7695 ymax: 42.9103
+Geodetic CRS:  GCS_unknown
 </code></pre></div>    </div>
 
     <p>Now we can create our plot:</p>
@@ -696,10 +695,10 @@ proj4string:    +proj=longlat +datum=WGS84 +no_defs
   <h2>Key Points</h2>
   <ul>
     
-    <li><p>Spatial objects in <code class="highlighter-rouge">sf</code> are similar to standard data frames and can be manipulated using the same functions.</p>
+    <li><p>Spatial objects in <code class="language-plaintext highlighter-rouge">sf</code> are similar to standard data frames and can be manipulated using the same functions.</p>
 </li>
     
-    <li><p>Almost any feature of a plot can be customized using the various functions and options in the <code class="highlighter-rouge">ggplot2</code> package.</p>
+    <li><p>Almost any feature of a plot can be customized using the various functions and options in the <code class="language-plaintext highlighter-rouge">ggplot2</code> package.</p>
 </li>
     
   </ul>
@@ -755,7 +754,7 @@ proj4string:    +proj=longlat +datum=WGS84 +no_defs
   <div class="row">
     <div class="col-md-6 copyright" align="left">
 	
-	Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a> 2018–2020
+	Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a> 2018–2021
 	by <a href="https://carpentries.org/">The Carpentries</a>
         <br>
         Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a> 2016–2018

@@ -65,13 +65,14 @@ erie_outline <- st_read(
 
 
 ~~~
-Reading layer `erie_outline' from data source `/home/jose/Documents/Science/Workshops/2020-02_glatos/glatos-spatial_workshop_materials/_episodes_rmd/data/erie_outline.shp' using driver `ESRI Shapefile'
+Reading layer `erie_outline' from data source 
+  `/home/jemma/Documents/Science/Workshops/2021-09_gleon-spatial/gleon-spatial_workshop_materials/_episodes_rmd/data/erie_outline.shp' 
+  using driver `ESRI Shapefile'
 Simple feature collection with 1 feature and 7 fields
-geometry type:  POLYGON
-dimension:      XY
-bbox:           xmin: 285728.3 ymin: 4580281 xmax: 682178.4 ymax: 4752964
-epsg (SRID):    NA
-proj4string:    +proj=utm +zone=17 +ellps=GRS80 +units=m +no_defs
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 285728.3 ymin: 4580281 xmax: 682178.4 ymax: 4752964
+CRS:           unknown
 ~~~
 {: .output}
 
@@ -131,8 +132,44 @@ st_crs(erie_outline)
 
 ~~~
 Coordinate Reference System:
-  No EPSG code
-  proj4string: "+proj=utm +zone=17 +ellps=GRS80 +units=m +no_defs"
+  User input: unknown 
+  wkt:
+PROJCRS["unknown",
+    BASEGEOGCRS["GCS_unknown",
+        DATUM["D_Unknown_based_on_GRS80_ellipsoid",
+            ELLIPSOID["GRS 1980",6378137,298.257222101,
+                LENGTHUNIT["metre",1],
+                ID["EPSG",7019]]],
+        PRIMEM["Greenwich",0,
+            ANGLEUNIT["Degree",0.0174532925199433]]],
+    CONVERSION["UTM zone 17N",
+        METHOD["Transverse Mercator",
+            ID["EPSG",9807]],
+        PARAMETER["Latitude of natural origin",0,
+            ANGLEUNIT["Degree",0.0174532925199433],
+            ID["EPSG",8801]],
+        PARAMETER["Longitude of natural origin",-81,
+            ANGLEUNIT["Degree",0.0174532925199433],
+            ID["EPSG",8802]],
+        PARAMETER["Scale factor at natural origin",0.9996,
+            SCALEUNIT["unity",1],
+            ID["EPSG",8805]],
+        PARAMETER["False easting",500000,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8806]],
+        PARAMETER["False northing",0,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8807]],
+        ID["EPSG",16017]],
+    CS[Cartesian,2],
+        AXIS["(E)",east,
+            ORDER[1],
+            LENGTHUNIT["metre",1,
+                ID["EPSG",9001]]],
+        AXIS["(N)",north,
+            ORDER[2],
+            LENGTHUNIT["metre",1,
+                ID["EPSG",9001]]]]
 ~~~
 {: .output}
 
@@ -172,11 +209,10 @@ erie_outline
 
 ~~~
 Simple feature collection with 1 feature and 7 fields
-geometry type:  POLYGON
-dimension:      XY
-bbox:           xmin: 285728.3 ymin: 4580281 xmax: 682178.4 ymax: 4752964
-epsg (SRID):    NA
-proj4string:    +proj=utm +zone=17 +ellps=GRS80 +units=m +no_defs
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 285728.3 ymin: 4580281 xmax: 682178.4 ymax: 4752964
+CRS:           unknown
   OBJECTID PERIMETER LAKE_NAME ID ReferenceC  ShapeSTAre ShapeSTLen
 1        1   2445211 Lake Erie  1   60402132 25830205908    2445211
                         geometry
@@ -238,13 +274,14 @@ ggplot() +
 > > 
 > > 
 > > ~~~
-> > Reading layer `erie_contours' from data source `/home/jose/Documents/Science/Workshops/2020-02_glatos/glatos-spatial_workshop_materials/_episodes_rmd/data/erie_contours.shp' using driver `ESRI Shapefile'
+> > Reading layer `erie_contours' from data source 
+> >   `/home/jemma/Documents/Science/Workshops/2021-09_gleon-spatial/gleon-spatial_workshop_materials/_episodes_rmd/data/erie_contours.shp' 
+> >   using driver `ESRI Shapefile'
 > > Simple feature collection with 8764 features and 3 fields
-> > geometry type:  LINESTRING
-> > dimension:      XY
-> > bbox:           xmin: -83.57167 ymin: 41.36359 xmax: -78.7695 ymax: 42.9103
-> > epsg (SRID):    4326
-> > proj4string:    +proj=longlat +datum=WGS84 +no_defs
+> > Geometry type: LINESTRING
+> > Dimension:     XY
+> > Bounding box:  xmin: -83.57167 ymin: 41.36359 xmax: -78.7695 ymax: 42.9103
+> > Geodetic CRS:  GCS_unknown
 > > ~~~
 > > {: .output}
 > > 
@@ -272,8 +309,22 @@ ggplot() +
 > > 
 > > ~~~
 > > Coordinate Reference System:
-> >   EPSG: 4326 
-> >   proj4string: "+proj=longlat +datum=WGS84 +no_defs"
+> >   User input: GCS_unknown 
+> >   wkt:
+> > GEOGCRS["GCS_unknown",
+> >     DATUM["World Geodetic System 1984",
+> >         ELLIPSOID["WGS 84",6378137,298.257223563,
+> >             LENGTHUNIT["metre",1]],
+> >         ID["EPSG",6326]],
+> >     PRIMEM["Greenwich",0,
+> >         ANGLEUNIT["Degree",0.0174532925199433]],
+> >     CS[ellipsoidal,2],
+> >         AXIS["longitude",east,
+> >             ORDER[1],
+> >             ANGLEUNIT["Degree",0.0174532925199433]],
+> >         AXIS["latitude",north,
+> >             ORDER[2],
+> >             ANGLEUNIT["Degree",0.0174532925199433]]]
 > > ~~~
 > > {: .output}
 > > 
